@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+// import 'react-native-gesture-handler';
+//import { createDrawerNavigator } from '@react-navigation/drawer';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import LenderProfileDetails from './Lender/LenderProfileDetails'
+import Screen from './navigation/Screens'
+import { LogBox } from "react-native";
+import { createStore } from 'redux';
+import allReducers from './src/reducers';
+import { Provider } from 'react-redux';
+
+
+LogBox.ignoreLogs(["EventEmitter.removeListener","ViewPropTypes",'VirtualizedLists','Warning:...']);
+
+const store = createStore(
+               allReducers
+              );
+
+const App =()=>{
+ return(
+    <Provider store={store}>
+       <NavigationContainer>
+           <Screen />
+       </NavigationContainer>
+    </Provider>
+)
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
