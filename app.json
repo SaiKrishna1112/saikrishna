@@ -46,6 +46,14 @@
           "cameraPermission": "The app accesses your camera to take snap of you ."
         }
       ]
-    ]
+    ],
+    "plugins": [
+     [
+       "expo-notifications",
+       {
+         "color": "#ffffff"
+       }
+     ]
+   ]
   }
 }

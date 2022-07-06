@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import {View,StyleSheet,Text,TouchableOpacity,Image,Alert} from 'react-native'
+import {View,StyleSheet,Text,TouchableOpacity,Image,Alert,ScrollView} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {launchCameraAsync, useCameraPermissions, PermissionStatus} from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
@@ -139,7 +139,9 @@ return(
             <Text style={{fontWeight:'bold',fontSize:20}}>{userDetail.mobileNumber}</Text>
             <Text style={{fontWeight:'bold',fontSize:18,marginBottom:20}}>{userDetail.email}</Text>
              </View>
+              <ScrollView>
             <View>
+
                 <View style={styles.view}>
                 <View style={styles.txt}>
                 <TouchableOpacity onPress={()=>navigation.navigate('Edit Profile Detail')}>
@@ -210,6 +212,7 @@ return(
 
 
             </View>
+            </ScrollView>
 
             <View style={{marginTop:300}}>
               <Text>Powered by Oxyloans</Text>

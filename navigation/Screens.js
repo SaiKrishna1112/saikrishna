@@ -26,7 +26,8 @@ import MyClosedDeals from '../Lender/MyClosedDeals'
 import EscrowClosedDeals from '../Lender/EscrowClosedDeals'
 import PersonalClosedDeals from '../Lender/PersonalClosedDeals'
 import Support from '../Lender/Support'
-import Tickethistory from'../Lender/Tickethistory'
+import Tickethistory from '../Lender/Tickethistory'
+import ParticipateDetails from '../Lender/ParticipateDetails' 
 
 
 const Screen=()=> {
@@ -50,6 +51,7 @@ const Screen=()=> {
            <Stack.Screen name = "Running Deals"  component = { OngoingDeals } />
            <Stack.Screen name = "Deal Info" component = { SingleDeal } />
            <Stack.Screen name = "Participated Deals" component = { ParticpatedDeals } />
+           <Stack.Screen name = "Participate Details" component = { ParticipateDetails} />
            <Stack.Screen name = "View Lenders" component = { ViewLenders } />
            <Stack.Screen name = "View Statement" component = { ViewStatement } />
            <Stack.Screen name = "Personal Deals" component = { PersonalDeals } />

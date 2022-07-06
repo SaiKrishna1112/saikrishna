@@ -6,6 +6,7 @@ import {
   TabButtonLayout, // optional
   IAppearanceOptions // optional
 } from 'react-native-animated-nav-tab-bar'
+import {Image} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
 import {createStackNavigator} from '@react-navigation/stack'
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -98,7 +99,6 @@ const LenderTabs=()=>(
      )
    }}
  />
-
  </Tabs.Navigator>
 );
 
@@ -106,6 +106,7 @@ export default LenderTabs;
 
 
 const HomeStackScreen = ({navigation})=>(
+
     <HomeStack.Navigator screenOptions={{
      headerStyle: {
        backgroundColor : '#98c1d9',
@@ -115,11 +116,7 @@ const HomeStackScreen = ({navigation})=>(
      fontWeight:'bold'
    }
  }}>
-   <HomeStack.Screen name="Dashboard" component={LenderHome} options={{
-     headerLeft:()=>(
-     <Icons name="" size={35} backgroundColor="white"></Icons>
-    ),
-   }}/>
+   <HomeStack.Screen name="Dashboard" component={LenderHome} />
 
  </HomeStack.Navigator>
 );

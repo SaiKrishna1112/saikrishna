@@ -1,14 +1,82 @@
 import 'react-native-gesture-handler';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import axios from "axios";
 import Icon from 'react-native-vector-icons/Ionicons';
  import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, View,TouchableOpacity,TextInput,ActivityIndicator,
- Linking,ScrollView,Modal,Alert,Image,ImageBackground} from 'react-native';
+ Linking,ScrollView,Modal,Alert,Image,ImageBackground,Button} from 'react-native';
 //import MyTransactionHistory from './MyTransactionHistory';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 function LenderWallets({navigation}){
+
+    useEffect(()=>{
+        async function configurePushNotifications(){
+        const { status } = await Notifications.getPermissionsAsync();
+        let finalStatus = status;
+
+        if(finalStatus !== 'granted'){
+         const { status } = await Notifications.requestPermissionsAsync();
+         finalStatus = status;
+        }
+
+        if (finalStatus !=='granted'){
+         Alert.alert('Permission Required',
+        'Push Notifications'
+       );
+       return;
+        }
+        const pushTokenData = await Notifications.getExpoPushTokenAsync();
+          console.log(pushTokenData);
+
+          if (Platform.OS === 'android') {
+           Notifications.setNotificationChannelAsync('default',{
+            name: 'default',
+            importance: Notifications.AndroidImportance.DEFAULT
+           });
+          }
+        }
+        configurePushNotifications();
+    }, []);
+
+ useEffect(()=>{
+ const subscription1 = Notifications.addNotificationReceivedListener((notification)=>{
+   console.log('Notification Received');
+   console.log(notification);
+  });
+
+   const subscription2 = Notifications.addNotificationResponseReceivedListener((response)=>{
+    console.log('Notification Response');
+    console.log(response);
+   })
+  return () => {
+   subscription1.remove();
+   subscription2.remove();
+  };
+ },[])
+function scheduleNotificationHandler() {
+     alert('Notification')
+   Notifications.scheduleNotificationAsync({
+      content:{
+       title: "This is my First local Notification",
+       body: "This is my First local Notification",
+      },
+      trigger:{
+       seconds: 5,
+      },
+     });
+    }
+
+
  const userDetails = useSelector(state=>state.counter);
  const userDetail = useSelector(state=>state.logged);
  var access = userDetails.headers.accesstoken;
@@ -135,7 +203,7 @@ function Load(){
              <Text style={styles.appButtonText}>Withdrawal</Text>
            </TouchableOpacity>
           </View>
-         
+
          </View>
          <Modal animationType="slide"
      visible={modal1}>

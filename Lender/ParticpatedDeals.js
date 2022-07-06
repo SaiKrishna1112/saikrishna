@@ -85,7 +85,7 @@ const ParticpatedDeals = ({navigation}) => {
                        <View style={{flexDirection:'row'}}>
                  <View style={{alignItems:'center',justifyContent:'center',padding:14,borderBottomColor:'grey',borderBottomWidth:1,}}>
                  <TouchableOpacity style={{backgroundColor:'#569F40',borderRadius:3,height:28,width:130,alignItems:'center',justifyContent:'center',}}
-                    onPress={()=>navigation.navigate('ViewStatement',{id:item.dealId})}><Text style={{color:'white',fontWeight:"bold"}}>View Statements</Text></TouchableOpacity>
+                    onPress={()=>navigation.navigate('View Statement',{id:item.dealId})}><Text style={{color:'white',fontWeight:"bold"}}>View Statements</Text></TouchableOpacity>
                  </View>
 
 

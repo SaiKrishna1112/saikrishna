@@ -10,7 +10,6 @@ import { StyleSheet, Text, View,Button ,Alert,TextInput,FlatList,Modal,SafeAreaV
 
 const SingleDeal = ({route,navigation}) => {
   const [value, setValue] = useState("MONTHLY");
-
   const [dealName,setDealName]=useState('');
   const [DealAmount,setDealAmount]=useState('');
   const [tenure,setTenure]=useState('');
@@ -44,7 +43,7 @@ const SingleDeal = ({route,navigation}) => {
                  })
 
         .then(function(response){
-            console.log(response.data);
+            //console.log(response.data);
 
             setDealName(response.data.dealName)
             setDealAmount(response.data.dealAmount)
@@ -110,17 +109,17 @@ data,
              })
 
     .then(function(response){
-        console.log(response.data);
+        //console.log(response.data);
+        Alert.alert(
+         "Success",
+         "Successfully Participate in Deal",
+         [
+          { text: "OK", onPress: () => navigation.navigate('Participated Deals') }
+         ]
+        )
         setTimeout(function(){
          setloading(false)
-         Alert.alert(
-          "Success",
-          "Successfully Participate in Deal",
-          [
-           { text: "OK", onPress: () => navigation.navigate('Participated Deals') }
-          ]
-         )
-      },1000);
+      },8000);
        })
        .catch(function(error){
            console.log(error)
@@ -128,7 +127,7 @@ data,
             "Oops",
             "Something Went Wrong Please try After Sometime",
             [
-             { text: "OK", onPress: () => setLoading(false) }
+             { text: "OK", onPress: () =>navigation.navigate('Participated Deals') }
             ]
            )
        })

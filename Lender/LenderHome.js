@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList} from 'react-native'
+import React,{useState,useEffect,useLayoutEffect} from 'react'
+import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList,Button,Alert,ToastAndroid} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { SliderBox } from "react-native-image-slider-box";
 import { Neomorph } from 'react-native-neomorph-shadows';
@@ -10,6 +10,16 @@ import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
 
 const Home = ({navigation}) => {
+
+const [imageshow,setimageshow] = useState();
+
+ const errormsg = msg => {
+   ToastAndroid.showWithGravity(msg,
+     ToastAndroid.SHORT,
+     ToastAndroid.CENTER
+   );
+ };
+
       const images=[
          "https://source.unsplash.com/1024x768/?nature",
          "https://source.unsplash.com/1024x768/?water",
@@ -17,7 +27,6 @@ const Home = ({navigation}) => {
          "https://source.unsplash.com/1024x768/?tree",
          require('../assets/Avatar.jpg'),
        ]
-        var count=1
        const userDetails = useSelector(state=>state.counter);
         var access = userDetails.headers.accesstoken;
         var id = userDetails.data.id;
@@ -59,6 +68,42 @@ const Home = ({navigation}) => {
                   setGreeting("Good Evening!");
               }
        }
+
+       const getprofieshowss=()=>{
+       setLoading(true)
+       axios({
+          method:'get',
+          url:'http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/download/PROFILEPIC',
+          headers:{
+                accessToken:access,
+               }
+         })
+          .then(function (response) {
+           //console.log(response.data);
+            var imageshow=response.data.downloadUrl;
+            setTimeout(function(){
+                    setLoading(false);
+                   },2000)
+                })
+          .catch(function (error) {
+           console.log('error',error);
+           console.log(error.response.data.errorMessage);
+         });
+
+       }
+
+       useLayoutEffect(()=>{
+       navigation.setOptions({
+        headerLeft:()=>(
+        <Image source={{uri:imageshow }} style={styles.image}/>
+        ),
+       });
+       },[]);
+
+       useEffect(()=>{
+        getprofieshowss();
+       },[])
+
          const Getfunction=()=>{
        axios({
            method:'get',
@@ -138,8 +183,8 @@ function walletfunction(){
   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
     userId:id,
     requestType:"WALLETCREDITED",
-    pageSize:5,
-    pageNo:1,
+    pageSize:3,
+    pageNo:count1,
     searchType:"DESC"
   },{
     headers:{
@@ -159,18 +204,92 @@ function walletfunction(){
    });
 
   }
-function add(){
-   count++;
- earningsfunction()
- alert(count)
-}
+  const [count1,setCount1]=useState(1);
+  const [count2,setCount2]=useState(1);
+  const [count3,setCount3]=useState(1);
+  const [count4,setCount4]=useState(1);
+  const [count5,setCount5]=useState(1);
+      function add1(){
+         setCount1(count1+1);
+       walletfunction()
+
+      }
+              function sub1(){
+               if(count1==0){
+                 errormsg("No Data Found")
+                 setCount1(count1+2)
+              }else{
+              setCount1(count1-1);
+               walletfunction()
+
+              }
+              }
+       function add2(){
+          setCount2(count2+1);
+        referralearningsfunction()
+
+       }
+              function sub2(){
+               if(count2==0){
+                 errormsg("No Data Found")
+                 setCount2(count2+2)
+              }else{
+              setCount2(count2-1);
+               referralearningsfunction()
+
+              }
+              }
+       function add3(){
+          setCount3(count3+1);
+        interestearningsfunction()
+
+       }
+              function sub3(){
+               if(count3==0){
+                 errormsg("No Data Found")
+                 setCount3(count3+2)
+              }else{
+              setCount3(count3-1);
+               interestearningsfunction()
+
+              }
+              }
+       function add4(){
+          setCount4(count4+1);
+        principalfunction()
+
+       }
+             function sub4(){
+              if(count4==0){
+                errormsg("No Data Found")
+                setCount4(count4+2)
+             }else{
+             setCount4(count4-1);
+              principalfunction()
+
+             }
+             }
+        function add5(){
+           setCount5(count5+1);
+         earningsfunction()
+
+        }
+             function sub5(){
+              if(count5==0){
+                errormsg("No Data Found")
+                setCount5(count5+2)
+             }else{
+             setCount5(count5-1);
+              earningsfunction()
+             }
+             }
 
   function earningsfunction(){
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
       userId:id,
       requestType:"LENDERPATICIPATION",
-      pageSize:10,
-      pageNo:2,
+      pageSize:2,
+      pageNo:count5,
       searchType:"DESC"
     },{
       headers:{
@@ -195,8 +314,8 @@ function add(){
       axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
         userId:id,
         requestType:"REFERRALBONUS",
-        pageSize:5,
-        pageNo:1,
+        pageSize:2,
+        pageNo:count2,
         searchType:"DESC"
       },{
         headers:{
@@ -222,8 +341,8 @@ function add(){
         axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
           userId:id,
           requestType:"LENDERINTEREST",
-          pageSize:5,
-          pageNo:1,
+          pageSize:2,
+          pageNo:count3,
           searchType:"DESC"
         },{
           headers:{
@@ -248,8 +367,8 @@ function add(){
           axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
             userId:id,
             requestType:"LENDERPRICIPAL",
-            pageSize:5,
-            pageNo:1,
+            pageSize:2,
+            pageNo:count4,
             searchType:"DESC"
           },{
             headers:{
@@ -427,46 +546,10 @@ function add(){
 
 
  return(
+  <ScrollView>
   <View style={{marginTop:5}}>
-  <View>
-  <SliderBox
-         images={images}
-         sliderBoxHeight={200}
-         onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
-         dotColor="#FFEE58"
-         sliderBoxHeight={80}
-         inactiveDotColor="#90A4AE"
-         paginationBoxVerticalPadding={20}
-         autoplay
-         circleLoop
-         resizeMethod={'resize'}
-         resizeMode={'cover'}
-         paginationBoxStyle={{
-         position: "absolute",
-         bottom: 0,
-         padding: 0,
-         alignItems: "center",
-         alignSelf: "center",
-         justifyContent: "center",
-         paddingVertical: 10
-         }}
-         dotStyle={{
-         width: 10,
-         height: 10,
-         borderRadius: 5,
-         marginHorizontal: 0,
-         padding: 0,
-         margin: 0,
-         backgroundColor: "rgba(128, 128, 128, 0.92)"
-         }}
-         ImageComponentStyle={{borderRadius: 20, width: '97%', marginTop: 5}}
-         imageLoadingColor="#2196F3"
-      />
-      </View>
-      <ScrollView>
-  <View style={{marginTop:5}}>
-    <View style={{alignSelf:'center'}}>
-    <View style={{flexDirection:"row"}}>
+    <View>
+     <ScrollView horizontal>
    <View style={styles.box1}>
      <Text style={styles.txt1}>{Amount}</Text>
      <View style={{backgroundColor:'#008B8B',width:165,marginHorizontal:20,paddingVertical:10,bottom:-8,alignItems:'center'}}>
@@ -480,9 +563,7 @@ function add(){
        <Text style={{color:'white'}}>Active Deals: {Count}</Text>
      </View>
    </View>
-   </View>
 
-   <View style={{flexDirection:"row"}}>
    <View style={styles.box3}>
      <Text style={styles.txt1}>{ClosedAmt}</Text>
      <Text style={{color:'white'}}></Text>
@@ -491,19 +572,17 @@ function add(){
      </View>
    </View>
    <View style={styles.box4}>
-     <Text style={styles.txt1}>INR: {DisbursedAmt}</Text>
+     <Text style={styles.txt2}>INR: {DisbursedAmt}</Text>
      <Text style={{color:'white'}}></Text>
      <View style={{backgroundColor:'#E66C2C',width:165,marginHorizontal:20,paddingVertical:10,top:0,alignItems:'center'}}>
      <Text style={{color:'white'}}>No.of Disbursed Deals: {Disbursed}</Text>
      </View>
    </View>
-   </View>
-
-   <View style={{alignSelf:'center',marginBottom:15}} >
-    <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
-  </View>
-
-        </View>
+   </ScrollView>
+</View>
+                <View style={{alignSelf:'center',marginBottom:15}} >
+                 <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
+               </View>
 
 
                      <View style={styles.container2}>
@@ -516,9 +595,12 @@ function add(){
                   renderItem={renderList}
                   keyExtractor={item=>item.sno}
                   />
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+
+                  <View style={styles.btn1}><TouchableOpacity onPress={add1}><Text>Next</Text></TouchableOpacity></View>
+                  </View>
               </View>
-
-
 
                 <View style={styles.container2}>
               <View style={{margin:15}}>
@@ -529,6 +611,11 @@ function add(){
                   renderItem={renderList2}
                   keyExtractor={item=>item.sno}
                   />
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub2}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+
+                  <View style={styles.btn1}><TouchableOpacity onPress={add2}><Text>Next</Text></TouchableOpacity></View>
+                  </View>
                 </View>
 
                 <View style={styles.container2}>
@@ -540,6 +627,11 @@ function add(){
                   renderItem={renderList3}
                   keyExtractor={item=>item.sno}
                   />
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub3}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+
+                  <View style={styles.btn1}><TouchableOpacity onPress={add3}><Text>Next</Text></TouchableOpacity></View>
+                  </View>
                 </View>
 
 
@@ -552,6 +644,11 @@ function add(){
                   renderItem={renderList4}
                   keyExtractor={item=>item.sno}
                   />
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub4}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+
+                  <View style={styles.btn1}><TouchableOpacity onPress={add4}><Text>Next</Text></TouchableOpacity></View>
+                  </View>
                 </View>
 
                 <View style={styles.container2}>
@@ -563,22 +660,15 @@ function add(){
                   renderItem={renderList1}
                   keyExtractor={item=>item.sno}
                   />
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub5}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
 
-                  <View style={{flexDirection:'row'}}>
-                  <View style={{alignItems:'flex-start'}}><TouchableOpacity ><Text>Prev</Text></TouchableOpacity></View>
-
-                  <View style={{justifyContent:'flex-end'}}><TouchableOpacity onPress={add}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add5}><Text>Next</Text></TouchableOpacity></View>
                   </View>
                 </View>
-                <View style={{marginBottom:50}}><PaginationDot
-                    activeDotColor={'black'}
-                    curPage={count}
-                    maxPage={20}
-                /><Text>.............</Text></View>
 
    </View>
-     </ScrollView>
-  </View>
+   </ScrollView>
  )
 }
 
@@ -600,19 +690,19 @@ const styles=StyleSheet.create({
 
   box1:{
     backgroundColor:'#40E0D0',
-    width:165,
+    width:180,
     height:130,
     margin:10,
     borderRadius:8,
     alignItems:'center',
     justifyContent:'center',
     display:'flex',
-
+    marginLeft:60
   },
 
   box2:{
     backgroundColor:'#50C878',
-    width:165,
+    width:180,
     height:130,
     margin:10,
     borderRadius:8,
@@ -622,7 +712,7 @@ const styles=StyleSheet.create({
 
   box3:{
     backgroundColor:'#F75D59',
-    width:165,
+    width:180,
     height:130,
     margin:10,
     borderRadius:8,
@@ -632,7 +722,7 @@ const styles=StyleSheet.create({
 
   box4:{
     backgroundColor:'#FF8C00',
-    width:165,
+    width:180,
     height:130,
     margin:10,
     borderRadius:8,
@@ -646,8 +736,8 @@ const styles=StyleSheet.create({
     margin:2
   },
   txt2:{
-    backgroundColor:'blue',
     color:'white',
+    fontSize:25,
     marginTop:5,
     paddingTop:5,
   },
@@ -697,5 +787,28 @@ flatmain:{
   },
   TxtView1:{
     width:150,
+},
+btn:{
+ marginLeft:30,
+ borderWidth:1,
+ width:60,
+ height:20,
+ alignItems:'center',
+ borderRadius:8,
+ backgroundColor:'#84c0e2'
+},
+btn1:{
+ marginRight:30,
+ borderWidth:1,
+ width:60,
+ height:20,
+ alignItems:'center',
+ borderRadius:8,
+ backgroundColor:'#999999'
+},
+image:{
+ width:10,
+ height:10,
+ borderRadius:100
 }
 })
