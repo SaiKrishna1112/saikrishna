@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/Ionicons'
+
 import {useSelector} from 'react-redux';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
@@ -10,14 +12,13 @@ import ParticpatedDeals from './ParticpatedDeals';
 
 const MyClosedDeals = ({navigation}) => {
     const [deal,setDeal]=useState([])
-
-
+    const[count1,setCount1]=useState(1);
     const userDetails = useSelector(state=>state.counter);
 //   const userDetail = useSelector(state=>state.logged);
     var access = userDetails.headers.accesstoken;
     var id = userDetails.data.id;
+    var Data={ pageNo:count1,pageSize:10,dealType:'CLOSED'}
 
-    var Data={ pageNo:1,pageSize:10,dealType:'CLOSED'}
 const myclosedDealfunction=param=>{
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/listOfDealsInformationToLender',
     Data,
@@ -35,6 +36,22 @@ const myclosedDealfunction=param=>{
         })
        }
 
+
+function add1(){
+  setCount1(count1+1);
+  myclosedDealfunction()
+
+}
+       function sub1(){
+        if(count1==0){
+          errormsg("No Data Found")
+          setCount1(count1+2)
+       }else{
+       setCount1(count1-1);
+       myclosedDealfunction()
+
+       }
+       }
 
     const renderList = ({ item }) => {
 
@@ -113,7 +130,11 @@ const myclosedDealfunction=param=>{
 
     <SafeAreaView style={{paddingTop:10,flex:1,marginBottom:0}}>
 
+        <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+            <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
+            <View style={styles.btn2}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
+        </View>
     {/* <View> */}
       <FlatList
            data={deal}
@@ -156,7 +177,25 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     opacity:2,
 
-  }
+  },
+  btn:{
+    marginLeft:30,
+    borderWidth:1,
+    width:60,
+    height:20,
+    alignItems:'center',
+    borderRadius:8,
+    backgroundColor:'#84c0e2'
+   },
+   btn2:{
+    marginRight:30,
+    borderWidth:1,
+    width:60,
+    height:20,
+    alignItems:'center',
+    borderRadius:8,
+    backgroundColor:'#999999'
+   },
 
 
 })

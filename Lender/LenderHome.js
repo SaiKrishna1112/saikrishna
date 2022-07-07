@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream
 import React,{useState,useEffect,useLayoutEffect} from 'react'
 import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList,Button,Alert,ToastAndroid} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-=======
-import React,{useState,useEffect} from 'react'
-import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList} from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
->>>>>>> Stashed changes
 import { SliderBox } from "react-native-image-slider-box";
 import { Neomorph } from 'react-native-neomorph-shadows';
 import PaginationDot from 'react-native-animated-pagination-dot'
@@ -329,7 +323,7 @@ function walletfunction(){
         }
       })
       .then(function (response) {
-        setearnings(response.data.referrerResponseDto);
+        setreferral(response.data.referrerResponseDto);
         setTimeout(function(){
 
          setLoading(false)
@@ -550,19 +544,14 @@ function walletfunction(){
 
 
  return(
-<<<<<<< Updated upstream
   <ScrollView>
   <View style={{marginTop:5}}>
-    <View>
-     <ScrollView horizontal>
-=======
+   
 
- 
-    <ScrollView>
+    {/* <ScrollView> */}
   <View style={{marginTop:5}}>
  
     <ScrollView horizontal>
->>>>>>> Stashed changes
    <View style={styles.box1}>
      <Text style={styles.txt1}>{Amount}</Text>
      <View style={{backgroundColor:'#008B8B',width:165,marginHorizontal:20,paddingVertical:10,bottom:-8,alignItems:'center'}}>
@@ -577,11 +566,9 @@ function walletfunction(){
      </View>
    </View>
 
-<<<<<<< Updated upstream
-=======
 
   
->>>>>>> Stashed changes
+
    <View style={styles.box3}>
      <Text style={styles.txt1}>{ClosedAmt}</Text>
      <Text style={{color:'white'}}></Text>
@@ -597,54 +584,26 @@ function walletfunction(){
      </View>
    </View>
    </ScrollView>
-<<<<<<< Updated upstream
 </View>
                 <View style={{alignSelf:'center',marginBottom:15}} >
-                 <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
+                 <Text style={{fontWeight:'bold'}}>Membership Validity Date:  {Dates}</Text>
                </View>
-=======
-
-   <View style={{alignSelf:'center',marginBottom:15}} >
-    <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
-  </View>
-
-       
 
 
-  <View style={styles.container2}>
-        <View style={{margin:15}}>
-          <Text style={{fontWeight:"500",fontSize:17,color:'#2B547E'}}>Investment\Wallets</Text>
-        </View>
-          <FlatList
-          data={wallet}
-          renderItem={renderList}
-          keyExtractor={item=>item.sno}
-          />
-           <PaginationDot
-            activeDotColor={'black'}
-            curPage={curPage}
-            maxPage={2}
-        />
-      </View>
->>>>>>> Stashed changes
-
-     
-
-<<<<<<< Updated upstream
                      <View style={styles.container2}>
                 <View style={{margin:15}}>
                   <Text style={{fontWeight:"500",fontSize:17,color:'#2B547E'}}>Investment\Wallets</Text>
                 </View>
-                <TouchableOpacity onPress={downloadwallet}><Text>Download</Text></TouchableOpacity>
+                {/* <TouchableOpacity><Text>Download</Text></TouchableOpacity> */}
                   <FlatList
                   data={wallet}
                   renderItem={renderList}
                   keyExtractor={item=>item.sno}
                   />
-                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
-                  <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+                  <View style={{flexDirection:'row',margin:8,justifyContent:"space-between"}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
-                  <View style={styles.btn1}><TouchableOpacity onPress={add1}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
               </View>
 
@@ -658,9 +617,9 @@ function walletfunction(){
                   keyExtractor={item=>item.sno}
                   />
                   <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
-                  <View style={styles.btn}><TouchableOpacity onPress={sub2}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub2}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
-                  <View style={styles.btn1}><TouchableOpacity onPress={add2}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add2}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
                 </View>
 
@@ -674,9 +633,9 @@ function walletfunction(){
                   keyExtractor={item=>item.sno}
                   />
                   <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
-                  <View style={styles.btn}><TouchableOpacity onPress={sub3}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub3}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
-                  <View style={styles.btn1}><TouchableOpacity onPress={add3}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add3}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
                 </View>
 
@@ -691,9 +650,9 @@ function walletfunction(){
                   keyExtractor={item=>item.sno}
                   />
                   <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
-                  <View style={styles.btn}><TouchableOpacity onPress={sub4}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub4}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
-                  <View style={styles.btn1}><TouchableOpacity onPress={add4}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add4}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
                 </View>
 
@@ -707,63 +666,15 @@ function walletfunction(){
                   keyExtractor={item=>item.sno}
                   />
                   <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
-                  <View style={styles.btn}><TouchableOpacity onPress={sub5}><Text style={{color:'white'}}>Prev</Text></TouchableOpacity></View>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub5}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
-                  <View style={styles.btn1}><TouchableOpacity onPress={add5}><Text>Next</Text></TouchableOpacity></View>
+                  <View style={styles.btn1}><TouchableOpacity onPress={add5}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
                 </View>
-
-   </View>
-   </ScrollView>
-=======
-        <View style={styles.container2}>
-      <View style={{margin:15}}>
-          <Text style={{fontWeight:"500",fontSize:17,color:'#872657'}}>Referral Earnings</Text>
-        </View>
-          <FlatList
-          data={referral}
-          renderItem={renderList2}
-          keyExtractor={item=>item.sno}
-          />
-        </View>
-
-        <View style={styles.container5}>
-      <View style={{margin:15}}>
-          <Text style={{fontWeight:"500",fontSize:17,color:'#FFA500'}}>Interest Earnings</Text>
-        </View>
-          <FlatList
-          data={interestearnings}
-          renderItem={renderList3}
-          keyExtractor={item=>item.sno}
-          />
-        </View>
-
-
-        <View style={styles.container6}>
-      <View style={{margin:15}}>
-          <Text style={{fontWeight:"500",fontSize:17,color:'#F75D59'}}>Principal Returned</Text>
-        </View>
-          <FlatList
-          data={principal}
-          renderItem={renderList4}
-          keyExtractor={item=>item.sno}
-          />
-        </View>
-
-        <View style={styles.container3}>
-      <View style={{margin:15}}>
-          <Text style={{fontWeight:"500",fontSize:17,color:'green'}}>Deals vs Earnings</Text>
-        </View>
-          <FlatList
-          data={earnings}
-          renderItem={renderList1}
-          keyExtractor={item=>item.sno}
-          />
-        </View>
+        
         </View>
               </ScrollView>
 
->>>>>>> Stashed changes
  )
 }
 

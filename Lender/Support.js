@@ -191,10 +191,15 @@ const pickDocument = async () => {
              </View>
            </TouchableOpacity>
 
-
-                    <TouchableOpacity style={styles.btn} onPress={submitfunction} >
+           <TouchableOpacity onPress={submitfunction}>
+              <View style={styles.btn}>
+              <Icon  size={15}  color='black' name="send"/>
+              <Text style={{marginLeft:10}}>Send</Text>
+              </View>
+           </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.btn} onPress={submitfunction} >
                           <Text>Submit</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
         </View>
 
         </ScrollView>
@@ -255,17 +260,16 @@ const styles = StyleSheet.create({
     },
 
     btn:{
-        // margin:2,
-        padding:10,
-        width:100,
-        justifyContent:"center",
-        alignItems:"center",
-        alignSelf:"center",
-        borderRadius:5,
-        backgroundColor:"#4CAF50",
-      marginTop:15,
-      marginBottom:20
-        },
+      borderWidth:1,
+      width:100,
+      alignItems:'center',
+      alignSelf:'center',
+      height:35,
+      justifyContent:'center',
+      backgroundColor:'#ADD8E6',
+      borderRadius:15,
+      flexDirection:'row'
+     },
 
             btn1:{
                 // margin:2,

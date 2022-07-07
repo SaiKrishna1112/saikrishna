@@ -115,12 +115,12 @@ const ongoingDealfunction=param=>{
     <SafeAreaView style={{paddingTop:6,flex:1,marginBottom:-2}}>
       <View style={{marginTop:5}}>
         <View style={{margin:5,alignItems:'center',flexDirection:'row',justifyContent:'center',padding:5}}>
-           <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:110,alignItems:'center',justifyContent:'center',}}
+           <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:105,alignItems:'center',justifyContent:'center'}}
               onPress={()=>navigation.navigate('Personal Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Personal Deals</Text></TouchableOpacity>
-              <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:110,alignItems:'center',justifyContent:'center',marginLeft:15}}
-                 onPress={()=>navigation.navigate('Escrow Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Escrow Deals</Text></TouchableOpacity>
-                 <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:130,alignItems:'center',justifyContent:'center',marginLeft:15}}
-                    onPress={()=>navigation.navigate('Participated Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Participated Deals</Text></TouchableOpacity>
+            <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:100,alignItems:'center',justifyContent:'center',marginLeft:10}}
+              onPress={()=>navigation.navigate('Escrow Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Escrow Deals</Text></TouchableOpacity>
+            <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:130,alignItems:'center',justifyContent:'center',marginLeft:10}}
+              onPress={()=>navigation.navigate('Participated Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Participated Deals</Text></TouchableOpacity>
         </View>
       </View>
 

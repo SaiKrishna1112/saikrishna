@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons'
 
-import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ToastAndroid} from 'react-native';
 
 import ViewStatement from './ViewStatement';
 import SingleDeal from './SingleDeal';
@@ -10,13 +11,23 @@ import SingleDeal from './SingleDeal';
 
 const ParticpatedDeals = ({navigation}) => {
     const [Participated,setParticipated]=useState([])
+    const [count1,setCount1]=useState(1);
 
     const userDetails = useSelector(state=>state.counter);
             var id = userDetails.data.id;
       var access = userDetails.headers.accesstoken;
+     
+    var Data={ pageNo:count1,pageSize:10}
 
-    var Data={ pageNo:1,pageSize:10}
+    const errormsg = msg => {
+        ToastAndroid.showWithGravity(msg,
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+      
+        );
+      };
 
+function participatedealfunction(){
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/listOfDealPaticipation',
     Data,
       {headers:{
@@ -33,6 +44,26 @@ const ParticpatedDeals = ({navigation}) => {
         .catch(function(error){
             console.log(error)
         })
+    }
+useEffect(()=>{
+    participatedealfunction();
+},[])
+
+        function add1(){
+            setCount1(count1+1);
+            participatedealfunction()
+    
+         }
+                 function sub1(){
+                  if(count1==0){
+                    errormsg("No Data Found")
+                    setCount1(count1+2)
+                 }else{
+                 setCount1(count1-1);
+                 participatedealfunction()
+    
+                 }
+                 }
 
 
         const renderList = ({ item }) => {
@@ -100,7 +131,7 @@ const ParticpatedDeals = ({navigation}) => {
                  {item.participationStatus=="ACHIEVED"?
                  <View><Text style={styles.Txt2}>Deal Closed</Text></View>
                                                 :
-                 <View><TouchableOpacity style={styles.btn1} onPress={()=>navigation.navigate('SingleDeal',{id:item.dealId})}><Text style={styles.Txt2}>Participate</Text></TouchableOpacity></View>}
+                 <View><TouchableOpacity style={styles.btn1} onPress={()=>navigation.navigate('Deal Info',{id:item.dealId})}><Text style={styles.Txt2}>Participate</Text></TouchableOpacity></View>}
                  </View>
             </View>
             )}
@@ -111,6 +142,11 @@ const ParticpatedDeals = ({navigation}) => {
        <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:110,alignItems:'center',justifyContent:'center',}}
           onPress={()=>navigation.navigate('Closed Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Closed Deals</Text></TouchableOpacity>
     </View>
+    <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+                  <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
+
+                  <View style={styles.btn2}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
+                  </View>
        <FlatList
            data={Participated}
 
@@ -158,6 +194,24 @@ const styles = StyleSheet.create({
       backgroundColor:"#4CAF50",
       marginLeft:10
       },
+      btn:{
+        marginLeft:30,
+        borderWidth:1,
+        width:60,
+        height:20,
+        alignItems:'center',
+        borderRadius:8,
+        backgroundColor:'#84c0e2'
+       },
+       btn2:{
+        marginRight:30,
+        borderWidth:1,
+        width:60,
+        height:20,
+        alignItems:'center',
+        borderRadius:8,
+        backgroundColor:'#999999'
+       },
 
   })
 

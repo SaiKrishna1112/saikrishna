@@ -4,6 +4,8 @@ import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
 import AnimatedLoader from "react-native-animated-loader";
+import { Popup,Root } from 'popup-ui';
+import { ToastAndroid } from 'react-native';
 
 
 import { StyleSheet, Text, View,Button ,Alert,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ScrollView} from 'react-native';
@@ -29,6 +31,14 @@ const SingleDeal = ({route,navigation}) => {
   const [Half,setHalf]=useState();
   const [Yearly,setYearly]=useState();
   const [EOD,setEOD]=useState();
+
+  const errormsg = msg => {
+    ToastAndroid.showWithGravity(msg,
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    
+    );
+  };
         //console.log(route);
         //console.log(route.params.id);
         var dealId = route.params.id;
@@ -68,6 +78,7 @@ const SingleDeal = ({route,navigation}) => {
         })
 
      }
+
 useEffect(()=>{
   deal();
 },[])
@@ -84,13 +95,15 @@ var data1={
 }
 const dealparticipate = params => {
  if(amount==""){
-  alert("Please Enter Minimium Amount ")
+  errormsg("Please Participate Minimium Amount ")
   return false;
  }
  if(amount<=5000){
-  alert("Please Enter Above INR 5000")
-  return false
+  errormsg("Please Participate Minimum amount")
+  return false;
+  
  }
+
  var data ={
   userId:id,
   groupId:groupid,
@@ -109,33 +122,52 @@ data,
              })
 
     .then(function(response){
-        //console.log(response.data);
-        Alert.alert(
-         "Success",
-         "Successfully Participate in Deal",
-         [
-          { text: "OK", onPress: () => navigation.navigate('Participated Deals') }
-         ]
-        )
+        // console.log(response.data);  
         setTimeout(function(){
          setloading(false)
+         successpopup();
       },8000);
        })
        .catch(function(error){
-           console.log(error)
-           Alert.alert(
-            "Oops",
-            "Something Went Wrong Please try After Sometime",
-            [
-             { text: "OK", onPress: () =>navigation.navigate('Participated Deals') }
-            ]
-           )
+          //  console.log(error)
+           errorpopup();
        })
 
     }
 
 
+function successpopup(){
+return(
+
+  Popup.show({
+      type: 'Success',
+      title: 'Success',
+      button: true,
+      textBody: 'You have Successfully Participated in Deal',
+      buttontext: 'Ok',
+      callback: () => Popup.hide(),
+  
+    })
+)
+  }
+
+  function errorpopup(){
+    return(
+    
+      Popup.show({
+          type: 'Danger',
+          title: 'OOPS',
+          button: true,
+          textBody: "Something Went Wrong.Please try After Sometime",
+          buttontext: 'Ok',
+          callback: () => Popup.hide(),
+      
+        })
+    )
+      }
+
   return (
+    <Root>
     <SafeAreaView style={{paddingTop:4,flex:8,marginBottom:10}}>
     <View style={{marginHorizontal:20}}>
 
@@ -276,16 +308,17 @@ data,
      }
     </View>
     </View>
-    <AnimatedLoader
+    {/* <AnimatedLoader
      visible={loading}
      overlayColor="rgba(255,255,255,0.75)"
      source={require("../assets/loading-state.json")}
      animationStyle={styles.lottie}
      speed={1}>
  <Text style={{fontSize:18,fontWeight:'bold'}}>Loading.....</Text>
- </AnimatedLoader>
+ </AnimatedLoader> */}
     </ScrollView>
   </SafeAreaView>
+  </Root>
   )
 }
 
@@ -293,7 +326,6 @@ const styles = StyleSheet.create({
     flatmain:{
       flexDirection:"row",
       alignItems:'center',
-      paddingHorizontal:20
     },
 
     Txt1:{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 
@@ -10,10 +10,12 @@ const ViewLenders =({route,navigation}) => {
     const [view,setview]=useState([])
     const userDetails = useSelector(state=>state.counter);
 //   const userDetail = useSelector(state=>state.logged);
+
     var access = userDetails.headers.accesstoken;
     var id = userDetails.data.id;
     var dealId = route.params.id;
 
+  
 
     axios.get('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+dealId+'/listOfLenders',
 
@@ -31,6 +33,7 @@ const ViewLenders =({route,navigation}) => {
         .catch(function(error){
             console.log(error)
         })
+
 
 
         const renderList = ({ item }) => {
@@ -67,6 +70,11 @@ const ViewLenders =({route,navigation}) => {
                 <View style={styles.TxtView1}><Text style={styles.Txt1}>feeStatus </Text></View>
                 <View><Text style={styles.Txt2}>{item.feeStatus}</Text></View>
                 </View>
+{/* 
+                <View style={styles.flatmain}>
+                <View style={styles.TxtView1}><Text style={styles.Txt1}>Agreement Status </Text></View>
+                <View><Text style={styles.Txt2}>{item.feeStatus}</Text></View>
+                </View> */}
            </View>
             );
           };
@@ -74,7 +82,7 @@ const ViewLenders =({route,navigation}) => {
         return (
 
             <SafeAreaView style={{paddingTop:8,flex:1,marginBottom:0}}>
-
+           
               <FlatList
                    data={view}
 
@@ -82,7 +90,7 @@ const ViewLenders =({route,navigation}) => {
 
                     keyExtractor={item => item.lenderId}
               />
-
+                
 
             </SafeAreaView>
           )
@@ -112,7 +120,25 @@ const ViewLenders =({route,navigation}) => {
 
             TxtView1:{
                 width:190,
-            }
+            },
+            btn:{
+                marginLeft:30,
+                borderWidth:1,
+                width:60,
+                height:20,
+                alignItems:'center',
+                borderRadius:8,
+                backgroundColor:'#84c0e2'
+               },
+               btn1:{
+                marginRight:30,
+                borderWidth:1,
+                width:60,
+                height:20,
+                alignItems:'center',
+                borderRadius:8,
+                backgroundColor:'#999999'
+               },
 
 
           })

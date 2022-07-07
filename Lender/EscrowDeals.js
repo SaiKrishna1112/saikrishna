@@ -95,7 +95,7 @@ const ongoingDealfunction=param=>{
             </View>
             <View style={{alignItems:'center',justifyContent:'center',padding:14}}>
             <TouchableOpacity onPress={()=>navigation.navigate('View Lenders',{id:item.dealId})} style={{backgroundColor:'#6495ED',borderRadius:3,height:28,width:180,alignItems:'center',justifyContent:'center',}}>
-            <Text style={{color:'white',fontWeight:"bold"}}>VIEW</Text>
+            <Text style={{color:'white',fontWeight:"bold"}}>VIEW LENDERS</Text>
             </TouchableOpacity>
             </View>
 
@@ -109,6 +109,19 @@ const ongoingDealfunction=param=>{
        ongoingDealfunction();
     },[]);
 
+    const Footer_Component = () => {
+      return (
+        <View style={{
+          height:80,
+          width: "100%",
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+  
+        </View>
+      );
+    }
+
   return (
 
     <SafeAreaView style={{paddingTop:6,flex:1,marginBottom:0}}>
@@ -119,10 +132,10 @@ const ongoingDealfunction=param=>{
     <View style={{marginTop:4}}>
       <FlatList
            data={deal}
-
            renderItem={renderList}
-
            keyExtractor={item => item.dealId}
+           ListFooterComponent={Footer_Component}
+
       />
     </View>
 

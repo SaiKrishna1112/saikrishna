@@ -82,7 +82,7 @@ const myclosedDealfunction=param=>{
             </View>
 
             <View style={styles.flatmain}>
-               <Text style={{fontWeight:'bold',color:'#569F40',fontSize:15,marginRight:33}}>Participation Time</Text>
+               <Text style={{fontWeight:'bold',color:'#569F40',fontSize:15,marginRight:30}}>Participation Time</Text>
                <View style={{flexDirection:"row"}}>
                  <Text>{item.fundsAcceptanceStartDate}</Text>
                  <Text style={{fontWeight:'bold',color:'#569F40',}}> to </Text>

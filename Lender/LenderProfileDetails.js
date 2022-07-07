@@ -137,7 +137,7 @@ return(
             <View style={{alignItems:'center'}}>
             <Text style={{fontWeight:'bold',fontSize:20}}>{userDetail.firstName}</Text>
             <Text style={{fontWeight:'bold',fontSize:18}}>ID:  <Text>LR{id}</Text></Text>
-            <Text style={{fontWeight:'bold',fontSize:20}}>{userDetail.mobileNumber}</Text>
+            <Text style={{fontWeight:'bold',fontSize:18}}>{userDetail.mobileNumber}</Text>
             <Text style={{fontWeight:'bold',fontSize:18,marginBottom:20}}>{userDetail.email}</Text>
              </View>
               <ScrollView>
@@ -215,7 +215,7 @@ return(
             </View>
             </ScrollView>
 
-            <View style={{marginTop:300}}>
+            <View style={{marginTop:100}}>
               <Text>Powered by Oxyloans</Text>
             </View>
         </View>
