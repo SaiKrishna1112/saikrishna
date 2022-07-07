@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {useSelector} from 'react-redux';
@@ -5,17 +6,39 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ToastAndroid} from 'react-native';
 
+=======
+import React, { useState,useEffect } from 'react'
+import axios from 'axios';
+import {useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons'
+import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ToastAndroid} from 'react-native';
+import AnimatedLoader from "react-native-animated-loader";
+>>>>>>> Stashed changes
 import ViewStatement from './ViewStatement';
 import SingleDeal from './SingleDeal';
 
 
 const ParticpatedDeals = ({navigation}) => {
+<<<<<<< Updated upstream
     const [Participated,setParticipated]=useState([])
     const [count1,setCount1]=useState(1);
+=======
+>>>>>>> Stashed changes
 
+ const errormsg = msg => {
+   ToastAndroid.showWithGravity(msg,
+     ToastAndroid.SHORT,
+     ToastAndroid.CENTER
+   );
+ };
+
+    const [Participated,setParticipated]=useState([])
+    const [count,setCount] = useState(1);
+    const [loading,setLoading] = useState(false);
     const userDetails = useSelector(state=>state.counter);
             var id = userDetails.data.id;
       var access = userDetails.headers.accesstoken;
+<<<<<<< Updated upstream
      
     var Data={ pageNo:count1,pageSize:10}
 
@@ -28,6 +51,26 @@ const ParticpatedDeals = ({navigation}) => {
       };
 
 function participatedealfunction(){
+=======
+
+      function add(){
+         setCount(count+1);
+       GetFunction()
+      }
+            function sub(){
+             if(count==0){
+               errormsg("No Data Found")
+               setCount(count+2)
+            }else{
+            setCount(count-1);
+             GetFunction()
+            }
+            }
+
+    var Data={ pageNo:count,pageSize:10}
+ function GetFunction(){
+  setLoading(true)
+>>>>>>> Stashed changes
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/listOfDealPaticipation',
     Data,
       {headers:{
@@ -38,12 +81,15 @@ function participatedealfunction(){
         .then(function(response){
             //console.log(response.data.listOfDealsInformationToLender)
             setParticipated(response.data.lenderPaticipatedResponseDto)
-
+            setTimeout(function(){
+                    setLoading(false);
+                   },2000)
 
         })
         .catch(function(error){
             console.log(error)
         })
+<<<<<<< Updated upstream
     }
 useEffect(()=>{
     participatedealfunction();
@@ -64,7 +110,19 @@ useEffect(()=>{
     
                  }
                  }
+=======
+}
+>>>>>>> Stashed changes
 
+useEffect(()=>{
+ GetFunction();
+},[])
+
+function footer() {
+ return (
+  <View style={{alignSelf:'center'}}><Text>No More Data Present Please GO Back </Text></View>
+ );
+}
 
         const renderList = ({ item }) => {
             return (
@@ -115,14 +173,14 @@ useEffect(()=>{
 
                        <View style={{flexDirection:'row'}}>
                  <View style={{alignItems:'center',justifyContent:'center',padding:14,borderBottomColor:'grey',borderBottomWidth:1,}}>
-                 <TouchableOpacity style={{backgroundColor:'#569F40',borderRadius:3,height:28,width:130,alignItems:'center',justifyContent:'center',}}
+                 <TouchableOpacity style={{backgroundColor:'#569F40',borderRadius:3,height:28,width:150,alignItems:'center',justifyContent:'center',}}
                     onPress={()=>navigation.navigate('View Statement',{id:item.dealId})}><Text style={{color:'white',fontWeight:"bold"}}>View Statements</Text></TouchableOpacity>
                  </View>
 
 
                  <View style={{alignItems:'center',justifyContent:'center',padding:14,borderBottomColor:'grey',borderBottomWidth:1,}}>
 
-                 <TouchableOpacity style={{backgroundColor:'#569F40',borderRadius:3,height:28,width:130,alignItems:'center',justifyContent:'center',}}
+                 <TouchableOpacity style={{backgroundColor:'#569F40',borderRadius:3,height:28,width:150,alignItems:'center',justifyContent:'center',}}
                     onPress={()=>navigation.navigate('Participate Details',{id:item.dealId})}><Text style={{color:'white',fontWeight:"bold"}}>Participate details</Text></TouchableOpacity>
                  </View>
                       </View>
@@ -137,23 +195,45 @@ useEffect(()=>{
             )}
 
   return (
-    <SafeAreaView style={{paddingTop:5,flex:1,marginBottom:0}}>
+    <SafeAreaView style={{paddingTop:2,flex:15,height:'auto'}}>
     <View style={{margin:5,alignItems:'flex-end',lexDirection:'row',justifyContent:'center',padding:5}}>
        <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:110,alignItems:'center',justifyContent:'center',}}
           onPress={()=>navigation.navigate('Closed Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Closed Deals</Text></TouchableOpacity>
     </View>
+<<<<<<< Updated upstream
     <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
                   <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
                   <View style={styles.btn2}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
+=======
+    <View style={{flexDirection:'row',justifyContent:'space-between',margin:3}}>
+    <View style={styles.btn}><TouchableOpacity onPress={sub}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
+
+    <View style={styles.btn2}><TouchableOpacity onPress={add}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
+    </View>
+    <View>
+>>>>>>> Stashed changes
        <FlatList
            data={Participated}
 
            renderItem={renderList}
 
            keyExtractor={item => item.dealId}
+
+           ListFooterComponent={footer}
+           ListFooterComponentStyle={styles.footerStyle}
       />
+
+      </View>
+      <AnimatedLoader
+       visible={loading}
+       overlayColor="rgba(255,255,255,0.75)"
+       source={require("../assets/loading.json")}
+       animationStyle={styles.lottie}
+       speed={1.5}>
+   <Text style={{fontSize:18,fontWeight:'bold'}}>Loading.....</Text>
+   </AnimatedLoader>
 
   </SafeAreaView>
   )
@@ -195,6 +275,7 @@ const styles = StyleSheet.create({
       marginLeft:10
       },
       btn:{
+<<<<<<< Updated upstream
         marginLeft:30,
         borderWidth:1,
         width:60,
@@ -213,6 +294,32 @@ const styles = StyleSheet.create({
         backgroundColor:'#999999'
        },
 
+=======
+       marginLeft:30,
+       borderWidth:1,
+       width:60,
+       height:20,
+       alignItems:'center',
+       borderRadius:8,
+       backgroundColor:'#84c0e2'
+      },
+      btn2:{
+       marginRight:30,
+       borderWidth:1,
+       width:60,
+       height:20,
+       alignItems:'center',
+       borderRadius:8,
+       backgroundColor:'#999999'
+      },
+    footerStyle:{
+     marginTop:50
+    },
+    lottie: {
+      width: 150,
+      height: 150
+    },
+>>>>>>> Stashed changes
   })
 
 export default ParticpatedDeals

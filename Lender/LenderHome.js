@@ -1,5 +1,9 @@
 import React,{useState,useEffect,useLayoutEffect} from 'react'
+<<<<<<< Updated upstream
 import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList,Button,Alert,ToastAndroid} from 'react-native'
+=======
+import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList,Button,Alert,ToastAndroid,Share} from 'react-native'
+>>>>>>> Stashed changes
 import Icon from 'react-native-vector-icons/Ionicons'
 import { SliderBox } from "react-native-image-slider-box";
 import { Neomorph } from 'react-native-neomorph-shadows';
@@ -29,9 +33,11 @@ const [imageshow,setimageshow] = useState();
          require('../assets/Avatar.jpg'),
        ]
        const userDetails = useSelector(state=>state.counter);
+       const userDetail = useSelector(state=>state.logged);
         var access = userDetails.headers.accesstoken;
         var id = userDetails.data.id;
-        const userDetail = useSelector(state=>state.logged);
+        var userId= userDetail.userDisplayId;
+
 
         const [loading,setLoading]= useState(false)
          const [curPage] = React.useState(0);
@@ -144,47 +150,52 @@ const [imageshow,setimageshow] = useState();
 
 //---------------------------------------------------------------------
 //Download Investment/Wallets
-  // function downloadwallet(){
-  //   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/excelsForNewLenderDashboard',
-  //   {
-  //     userId:id,
-  //     requestType:"WALLETCREDITED"
-  //   },{
-  //     headers:{
-  //       accessToken:access
-  //     }
-  //   })
-  //   .then(function (response) {
-  //     setLoading(true);
-  //   //console.log(response.data.excelDownloadUrl);
-  //         FileSystem.downloadAsync(
-  //         response.data.excelDownloadUrl,
-  //           ExternalStorageDirectoryPath
-  //         )
-  //           .then(({ uri }) => {
-  //             console.log('Finished downloading to ', uri);
-  //           })
-  //           .catch(error => {
-  //             console.error(error);
-  //           });
-  //     setTimeout(function(){
+const [count1,setCount1]=useState(2);
+const [count2,setCount2]=useState(1);
+const [count3,setCount3]=useState(1);
+const [count4,setCount4]=useState(1);
+const [count5,setCount5]=useState(1);
+  function downloadwallet(){
+    axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/excelsForNewLenderDashboard',
+    {
+      userId:id,
+      requestType:"WALLETCREDITED"
+    },{
+      headers:{
+        accessToken:access
+      }
+    })
+    .then(function (response) {
+      setLoading(true);
+    //console.log(response.data.excelDownloadUrl);
+          FileSystem.downloadAsync(
+          response.data.excelDownloadUrl,
+            ExternalStorageDirectoryPath
+          )
+            .then(({ uri }) => {
+              console.log('Finished downloading to ', uri);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+      setTimeout(function(){
 
-  //      setLoading(false)
-  //             })
-  //            })
-  //   .catch(function (error) {
-  //    console.log('error',error);
+       setLoading(false)
+              })
+             })
+    .catch(function (error) {
+     console.log('error',error);
 
-  //    });
+     });
 
-  //   }
+    }
 
 function walletfunction(){
   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
     userId:id,
     requestType:"WALLETCREDITED",
-    pageSize:3,
     pageNo:count1,
+    pageSize:4,
     searchType:"DESC"
   },{
     headers:{
@@ -204,85 +215,6 @@ function walletfunction(){
    });
 
   }
-  const [count1,setCount1]=useState(1);
-  const [count2,setCount2]=useState(1);
-  const [count3,setCount3]=useState(1);
-  const [count4,setCount4]=useState(1);
-  const [count5,setCount5]=useState(1);
-      function add1(){
-         setCount1(count1+1);
-       walletfunction()
-
-      }
-              function sub1(){
-               if(count1==0){
-                 errormsg("No Data Found")
-                 setCount1(count1+2)
-              }else{
-              setCount1(count1-1);
-               walletfunction()
-
-              }
-              }
-       function add2(){
-          setCount2(count2+1);
-        referralearningsfunction()
-
-       }
-              function sub2(){
-               if(count2==0){
-                 errormsg("No Data Found")
-                 setCount2(count2+2)
-              }else{
-              setCount2(count2-1);
-               referralearningsfunction()
-
-              }
-              }
-       function add3(){
-          setCount3(count3+1);
-        interestearningsfunction()
-
-       }
-              function sub3(){
-               if(count3==0){
-                 errormsg("No Data Found")
-                 setCount3(count3+2)
-              }else{
-              setCount3(count3-1);
-               interestearningsfunction()
-
-              }
-              }
-       function add4(){
-          setCount4(count4+1);
-        principalfunction()
-
-       }
-             function sub4(){
-              if(count4==0){
-                errormsg("No Data Found")
-                setCount4(count4+2)
-             }else{
-             setCount4(count4-1);
-              principalfunction()
-
-             }
-             }
-        function add5(){
-           setCount5(count5+1);
-         earningsfunction()
-
-        }
-             function sub5(){
-              if(count5==0){
-                errormsg("No Data Found")
-                setCount5(count5+2)
-             }else{
-             setCount5(count5-1);
-              earningsfunction()
-             }
-             }
 
   function earningsfunction(){
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
@@ -390,6 +322,82 @@ function walletfunction(){
           }
 
 
+                function add1(){
+                   setCount1(count1+1);
+                 walletfunction()
+
+                }
+                        function sub1(){
+                         if(count1==0){
+                           errormsg("No Data Found")
+                           setCount1(count1+1)
+                        }else{
+                        setCount1(count1-1);
+                         walletfunction()
+
+                        }
+                        }
+                 function add2(){
+                    setCount2(count2+1);
+                  referralearningsfunction()
+
+                 }
+                        function sub2(){
+                         if(count2==0){
+                           errormsg("No Data Found")
+                           setCount2(count2+2)
+                        }else{
+                        setCount2(count2-1);
+                         referralearningsfunction()
+
+                        }
+                        }
+                 function add3(){
+                    setCount3(count3+1);
+                  interestearningsfunction()
+
+                 }
+                        function sub3(){
+                         if(count3==0){
+                           errormsg("No Data Found")
+                           setCount3(count3+2)
+                        }else{
+                        setCount3(count3-1);
+                         interestearningsfunction()
+
+                        }
+                        }
+                 function add4(){
+                    setCount4(count4+1);
+                  principalfunction()
+
+                 }
+                       function sub4(){
+                        if(count4==0){
+                          errormsg("No Data Found")
+                          setCount4(count4+2)
+                       }else{
+                       setCount4(count4-1);
+                        principalfunction()
+
+                       }
+                       }
+                  function add5(){
+                     setCount5(count5+1);
+                   earningsfunction()
+
+                  }
+                       function sub5(){
+                        if(count5==0){
+                          errormsg("No Data Found")
+                          setCount5(count5+2)
+                       }else{
+                       setCount5(count5-1);
+                        earningsfunction()
+                       }
+                       }
+
+
   const renderList = ({ item }) => {
 
 
@@ -412,7 +420,7 @@ function walletfunction(){
         </View>
 
         </View>
-       
+
         )}
   const renderList1 = ({ item }) => {
 
@@ -542,15 +550,67 @@ function walletfunction(){
               </View>
               )}
 
+              const onShare = async () => {
+                try {
+                  const result = await Share.share({
+                    message:
+                      'http://182.18.139.198/new/register_lender?ref='+userId,
+
+
+
+                  });
+                  if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                    } else {
+                    }
+                  } else if (result.action === Share.dismissedAction) {
+                  }
+                } catch (error) {
+                  alert(error.message);
+                }
+              };
+
+
+              const onShare1 = async () => {
+                try {
+                  const result = await Share.share({
+                    message:
+                    'http://182.18.139.198/new/register_borrower?ref='+userId,
+                  });
+                  if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                    } else {
+                    }
+                  } else if (result.action === Share.dismissedAction) {
+                  }
+                } catch (error) {
+                  alert(error.message);
+                }
+              };
+
 
  return(
   <ScrollView>
   <View style={{marginTop:5}}>
+<<<<<<< Updated upstream
    
 
     {/* <ScrollView> */}
   <View style={{marginTop:5}}>
  
+=======
+   <Text style={{alignSelf:"center",padding:13,fontWeight:"800",fontSize:15}}>Share Referral Links</Text>
+    <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
+    <TouchableOpacity style={styles.touch} onPress={onShare}>
+      <Text style={{fontSize:14,color:"black",alignSelf:"center"}}><Icon name="share-social" size={15} color={"black"}/> Lender </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.touch1} onPress={onShare1}>
+      <Text style={{fontSize:14,color:"black",alignSelf:"center"}}><Icon name="share-social" size={15} color={"black"}/> Borrower </Text>
+        </TouchableOpacity>
+
+    </View>
+    <View>
+>>>>>>> Stashed changes
     <ScrollView horizontal>
    <View style={styles.box1}>
      <Text style={styles.txt1}>{Amount}</Text>
@@ -566,9 +626,12 @@ function walletfunction(){
      </View>
    </View>
 
+<<<<<<< Updated upstream
 
   
 
+=======
+>>>>>>> Stashed changes
    <View style={styles.box3}>
      <Text style={styles.txt1}>{ClosedAmt}</Text>
      <Text style={{color:'white'}}></Text>
@@ -584,23 +647,39 @@ function walletfunction(){
      </View>
    </View>
    </ScrollView>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 </View>
                 <View style={{alignSelf:'center',marginBottom:15}} >
                  <Text style={{fontWeight:'bold'}}>Membership Validity Date:  {Dates}</Text>
                </View>
+<<<<<<< Updated upstream
 
 
+=======
+
+    <View style={{alignItems:'center'}}>
+>>>>>>> Stashed changes
                      <View style={styles.container2}>
                 <View style={{margin:15}}>
                   <Text style={{fontWeight:"500",fontSize:17,color:'#2B547E'}}>Investment\Wallets</Text>
                 </View>
+<<<<<<< Updated upstream
                 {/* <TouchableOpacity><Text>Download</Text></TouchableOpacity> */}
+=======
+>>>>>>> Stashed changes
                   <FlatList
                   data={wallet}
                   renderItem={renderList}
                   keyExtractor={item=>item.sno}
                   />
+<<<<<<< Updated upstream
                   <View style={{flexDirection:'row',margin:8,justifyContent:"space-between"}}>
+=======
+                  <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
+>>>>>>> Stashed changes
                   <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
                   <View style={styles.btn1}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
@@ -671,10 +750,17 @@ function walletfunction(){
                   <View style={styles.btn1}><TouchableOpacity onPress={add5}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
                   </View>
                 </View>
+<<<<<<< Updated upstream
         
         </View>
               </ScrollView>
 
+=======
+                </View>
+
+   </View>
+   </ScrollView>
+>>>>>>> Stashed changes
  )
 }
 
@@ -823,5 +909,19 @@ image:{
  width:10,
  height:10,
  borderRadius:100
-}
+},
+touch:{
+  padding:10,
+  width:140,
+  borderRadius:15,
+  backgroundColor:"#E9967A",
+
+},
+touch1:{
+  padding:10,
+  width:140,
+  borderRadius:15,
+  backgroundColor:"#FA8072"
+
+},
 })

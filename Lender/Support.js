@@ -33,7 +33,7 @@ const Support=({navigation})=>{
         ToastAndroid.showWithGravity(msg,
           ToastAndroid.SHORT,
           ToastAndroid.CENTER,
-        
+
         );
       };
         axios({
@@ -50,7 +50,7 @@ const Support=({navigation})=>{
                   })
             .catch(function (error) {
            console.log('error',error);
-          
+
            });
 
     const submitfunction=props=>{
@@ -106,7 +106,7 @@ function popupmsg(){
            textBody: 'Thanks.We have received your Query and will get back to you with a response soon',
            buttontext: 'Ok',
            callback: () => Popup.hide(),
-       
+
          })
     );
     }
@@ -191,6 +191,7 @@ const pickDocument = async () => {
              </View>
            </TouchableOpacity>
 
+<<<<<<< Updated upstream
            <TouchableOpacity onPress={submitfunction}>
               <View style={styles.btn}>
               <Icon  size={15}  color='black' name="send"/>
@@ -200,6 +201,15 @@ const pickDocument = async () => {
                     {/* <TouchableOpacity style={styles.btn} onPress={submitfunction} >
                           <Text>Submit</Text>
                     </TouchableOpacity> */}
+=======
+
+                         <TouchableOpacity onPress={submitfunction}>
+                   <View style={styles.btn}>
+                   <Icon  size={15}  color='black' name="send"/>
+                   <Text style={{marginLeft:10}}>Send</Text>
+                   </View>
+                </TouchableOpacity>
+>>>>>>> Stashed changes
         </View>
 
         </ScrollView>

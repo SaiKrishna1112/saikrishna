@@ -59,7 +59,7 @@ function getdata(){
                    })
 
           .then(function(response){
-              console.log(response.data.lenderParticipationUpdatedInfo)
+              //console.log(response.data.lenderParticipationUpdatedInfo)
               setParticipated(response.data.lenderParticipationUpdatedInfo)
 
 

@@ -4,10 +4,10 @@
     "slug": "OxyLoans_App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/OxyLoansLogo1.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon23.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -30,7 +30,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/OxyLoansLogo1.jpg",
         "backgroundColor": "#FFFFFF"
       },
       "package": "Oxyloan.App"
@@ -51,7 +51,8 @@
      [
        "expo-notifications",
        {
-         "color": "#ffffff"
+         "color": "#ffffff",
+         "icon" : "./assets/oxylogo3.png"
        }
      ]
    ]

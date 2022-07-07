@@ -3,6 +3,7 @@ import {View,Text,TextInput,StyleSheet,Pressable,TouchableOpacity,Image,ToastAnd
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from 'axios'
+import {error} from '../navigation/Error'
 
 function LoginWithOTP({navigation}) {
  const errormsg = msg => {
@@ -35,20 +36,13 @@ function LoginWithOTP({navigation}) {
       })
       .then(function (response) {
        //console.log(response.data);
-       console.log(usernumber);
+       //console.log(usernumber);
        setHide(true)
        setshouldShow(false)
               })
       .catch(function (error) {
         console.log(error);
-        console.log(error.response);
-         Alert.alert(
-   "Warring",
-  // error.response.data.errorMessage,
-   [
-     { text: "OK", onPress: () => console.log("OK") }
-   ]
- );
+           error();
      });
 }
 
@@ -62,6 +56,7 @@ function submit(){
        setTimeout(function(){
                    setLoading(false);
                     console.log("LENDER");
+
                     navigation.navigate('LenderTabs')
                 }, 4000);
               })
@@ -82,11 +77,13 @@ function submit(){
     return(
         <View style={{flex:1}}>
         <View style={styles.cont1}>
-           <Image source={require('../assets/bgm.jpeg')} style={{height:1000,width:500}}></Image>
+           <Image source={require('../assets/bgm.png')} style={{height:1000,width:600}}></Image>
            </View>
               <View style={styles.mainview}>
-
-                  <Text style={styles.txt}>LOGIN WITH OTP</Text>
+              <View style={{alignSelf:'center',marginBottom:50}}>
+                 <Image source={require('../assets/oxylogo-white.png')} style={{height:120,width:200}}></Image>
+              </View>
+                  <Text style={styles.txt}>Login with OTP</Text>
                   <TextInput style={styles.input} placeholder="Enter Mobile Number" onChangeText={(number)=>setusernumber(number)} />
                  {shouldShow ? ( <View>
                   <TouchableOpacity style={styles.btn} onPress={submitfunction}>
@@ -110,7 +107,7 @@ function submit(){
                           <Text>Login</Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={{borderBottomColor:"grey",borderBottomWidth:1,width:250,alignSelf:"center",marginTop:25}}/>
+                    <View style={{borderBottomColor:"white",borderBottomWidth:1,width:250,alignSelf:"center",marginTop:25}}/>
                           <Text style={{alignSelf:"center",marginTop:50,fontSize:16}}>New Member ?</Text>
                           <TouchableOpacity>
                               <Text style={{alignSelf:"center",marginTop:2,color:"#f8f8ff",fontSize:16}}>Register</Text>
@@ -128,6 +125,9 @@ export default LoginWithOTP;
 const styles = StyleSheet.create({
  cont1:{
         position:'relative',
+        alignSelf:'center',
+        justifyContent:'center',
+        alignItems:'center'
       },
       mainview:{
         position:'absolute',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         height:400,
         alignSelf:"center",
         paddingVertical:5,
-        marginTop:200,
+        marginTop:150,
 
       },
       txt:{
@@ -146,16 +146,18 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         marginTop:10,
         marginBottom:10,
-        // color:"#00bfff"
+        color:"#ffff"
       },
       input:{
-        borderColor:'grey',
+       fontSize:15,
+        backgroundColor:'white',
+        borderColor:'white',
         borderWidth:1,
         padding:10,
         borderRadius:20,
         marginVertical:15,
         marginHorizontal:15,
-
+        opacity:0.4
       },
       inputContainer: {
         width: '90%',

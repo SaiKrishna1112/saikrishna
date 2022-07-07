@@ -133,7 +133,7 @@ const WalletStackScreen = ({navigation})=>(
  }}>
    <WalletStack.Screen name="Wallet" component={LenderWallets} options={{
      headerLeft:()=>(
-     <Icons.Button name="" size={35} backgroundColor="#98c1d9" onPress={()=>navigation.toggleDrawer()}></Icons.Button>
+     <Icons.Button name="" size={35} backgroundColor="#98c1d9"></Icons.Button>
     ),
    }}/>
 
@@ -152,7 +152,7 @@ const DealsStackScreen = ({navigation})=>(
  }}>
    <DealsStack.Screen name="Running Deals" component={OngoingDeals} options={{
      headerLeft:()=>(
-     <Icons.Button name="" size={35} backgroundColor="#98c1d9" onPress={()=>navigation.toggleDrawer()}></Icons.Button>
+     <Icons.Button name="" size={35} backgroundColor="#98c1d9"></Icons.Button>
     ),
    }}/>
 

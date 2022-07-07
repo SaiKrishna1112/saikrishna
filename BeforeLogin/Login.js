@@ -3,8 +3,11 @@ import {View,Text,TextInput,StyleSheet,Pressable,TouchableOpacity,Image,ToastAnd
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from 'axios'
+import { Asset } from 'expo-asset';
+import { StatusBar } from 'expo-status-bar';
 import { useDispatch } from 'react-redux';
 import { AccessToken,UserID } from '../src/action/index';
+import AnimatedLoader from "react-native-animated-loader";
 
 const Login=({navigation})=>{
  const dispatch=useDispatch();
@@ -14,8 +17,8 @@ const Login=({navigation})=>{
      ToastAndroid.CENTER
    );
  };
-  const[username,setusername]=useState('sreeja83411@gmail.com');
-  const [password, setPassword] = useState('Test@123');
+  const[username,setusername]=useState('');
+  const [password, setPassword] = useState('');
   const [loading,setLoading] = useState(false);
   var prod='https://fintech.oxyloans.com/oxyloans/v1/user';
   var local='http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user';
@@ -93,7 +96,7 @@ const Login=({navigation})=>{
                  )
                 }
 
-               },1000);
+               },2000);
                })
        .catch(function (error) {
         console.log(error);
@@ -115,10 +118,13 @@ const Login=({navigation})=>{
     return(
         <View style={{flex:1}}>
         <View style={styles.cont1}>
-           <Image source={require('../assets/bgm.jpeg')} style={{height:1000,width:500}}></Image>
+           <Image source={require('../assets/bgm.png')} style={{height:900,width:500}}></Image>
            </View>
-              <View style={styles.mainview}>
 
+              <View style={styles.mainview}>
+              <View style={{alignSelf:'center',marginBottom:50}}>
+                 <Image source={require('../assets/oxylogo-white.png')} style={{height:120,width:200}}></Image>
+              </View>
                   <Text style={styles.txt}>LOGIN</Text>
                   <TextInput style={styles.input} placeholder="Enter Email or Mobile Number" onChangeText={(text)=>setusername(text)}></TextInput>
                   <View style={styles.inputContainer}>
@@ -137,7 +143,7 @@ const Login=({navigation})=>{
                       </TextInput>
                       {/* <Icon name="person" size={20} style={{marginRight:40}}  /> */}
                       <Pressable onPress={handlePasswordVisibility}>
-                        <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+                        <MaterialCommunityIcons name={rightIcon} size={22} color="white" />
                       </Pressable>
                   </View>
                   <TouchableOpacity style={styles.btn} onPress={submitfunction}>
@@ -152,12 +158,22 @@ const Login=({navigation})=>{
                           <Text>Login With OTP</Text>
                       </TouchableOpacity>
                     </View>
-                    <View style={{borderBottomColor:"grey",borderBottomWidth:1,width:250,alignSelf:"center",marginTop:25}}/>
+                    <View style={{borderBottomColor:"white",borderBottomWidth:1,width:250,alignSelf:"center",marginTop:25}}/>
                           <Text style={{alignSelf:"center",marginTop:50,fontSize:16}}>New Member ?</Text>
                           <TouchableOpacity>
                               <Text style={{alignSelf:"center",marginTop:2,color:"#f8f8ff",fontSize:16}}>Register</Text>
                           </TouchableOpacity>
               </View>
+
+              <AnimatedLoader
+               visible={loading}
+               overlayColor="rgba(255,255,255,0.75)"
+               source={require("../assets/loading.json")}
+               animationStyle={styles.lottie}
+               speed={1.5}>
+           <Text style={{fontSize:18,fontWeight:'bold'}}>Loading.....</Text>
+           </AnimatedLoader>
+
         </View>
 
     )
@@ -170,15 +186,15 @@ export default Login;
 const styles = StyleSheet.create({
  cont1:{
         position:'relative',
+        alignSelf:'center'
       },
       mainview:{
         position:'absolute',
-        borderRadius: 16,
         width:320,
-        height:400,
+        height:800,
         alignSelf:"center",
         paddingVertical:5,
-        marginTop:200,
+        marginTop:150,
 
       },
       txt:{
@@ -188,16 +204,15 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         marginTop:10,
         marginBottom:10,
-        // color:"#00bfff"
+         color:"#ffff"
       },
       input:{
-        borderColor:'grey',
+        borderColor:'white',
         borderWidth:1,
         padding:10,
         borderRadius:20,
         marginVertical:15,
         marginHorizontal:15,
-
       },
       inputContainer: {
         width: '90%',
@@ -207,11 +222,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'grey'
+        borderColor: 'white'
       },
       inputField: {
         padding: 10,
         width: '90%',
+        borderRadius:20
       },
       btn:{
         backgroundColor:"#56A5EC",
@@ -222,6 +238,14 @@ const styles = StyleSheet.create({
         padding:10,
         marginBottom:10,
        alignItems:'center'
+      },
+      txt1:{
+       fontWeight:'bold',
+       fontSize:15,
+      },
+      lottie: {
+        width: 150,
+        height: 150
       },
 })
 //

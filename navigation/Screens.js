@@ -27,7 +27,8 @@ import EscrowClosedDeals from '../Lender/EscrowClosedDeals'
 import PersonalClosedDeals from '../Lender/PersonalClosedDeals'
 import Support from '../Lender/Support'
 import Tickethistory from '../Lender/Tickethistory'
-import ParticipateDetails from '../Lender/ParticipateDetails' 
+import ParticipateDetails from '../Lender/ParticipateDetails'
+
 
 
 
@@ -62,6 +63,7 @@ const Screen=()=> {
            <Stack.Screen name = "Personal Closed Deals" component = { PersonalClosedDeals } />
            <Stack.Screen name = "Write To Us" component = { Support } />
            <Stack.Screen name = "Ticket History" component = { Tickethistory } />
+
            <Stack.Screen name = "LenderTabs" component = { LenderTabs } options={{headerShown: false}}/>
       </Stack.Navigator>
 

@@ -88,13 +88,6 @@ function Submit() {
   setMode(currentMode);
  };
  //----------------DatePicker End-----------------//
-useLayoutEffect(()=>{
-navigation.setOptions({
- headerRight: () => (
-  <Icon name="save" size={24} color='black' style={{marginRight:50}}/>
- ),
-});
-},[]);
 
 //================fetch location using get call==================
 function pincodefunction(){
@@ -110,8 +103,8 @@ function pincodefunction(){
     setState(response.data.state);
     setTimeout(function(){
                setLoading(false);
-               
-           
+
+
              }, 1000);
            })
    .catch(function (error) {

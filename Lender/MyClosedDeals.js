@@ -4,22 +4,52 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import {useSelector} from 'react-redux';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-
-import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity} from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons'
+import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ToastAndroid} from 'react-native';
+import AnimatedLoader from "react-native-animated-loader";
 
 import ParticpatedDeals from './ParticpatedDeals';
 
 const MyClosedDeals = ({navigation}) => {
     const [deal,setDeal]=useState([])
+<<<<<<< Updated upstream
     const[count1,setCount1]=useState(1);
+=======
+    const errormsg = msg => {
+      ToastAndroid.showWithGravity(msg,
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    };
+       const [count,setCount] = useState(1);
+    const [loading,setLoading] = useState(false);
+>>>>>>> Stashed changes
     const userDetails = useSelector(state=>state.counter);
 //   const userDetail = useSelector(state=>state.logged);
     var access = userDetails.headers.accesstoken;
     var id = userDetails.data.id;
     var Data={ pageNo:count1,pageSize:10,dealType:'CLOSED'}
 
+<<<<<<< Updated upstream
+=======
+    function add(){
+       setCount(count+1);
+     myclosedDealfunction()
+    }
+          function sub(){
+           if(count==0){
+             errormsg("No Data Found")
+             setCount(count+2)
+          }else{
+          setCount(count-1);
+           myclosedDealfunction()
+          }
+          }
+
+    var Data={ pageNo:count,pageSize:10,dealType:'CLOSED'}
+>>>>>>> Stashed changes
 const myclosedDealfunction=param=>{
+ setLoading(true)
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/listOfDealsInformationToLender',
     Data,
       {headers:{
@@ -30,6 +60,9 @@ const myclosedDealfunction=param=>{
         .then(function(response){
         //console.log(response.data);
             setDeal(response.data.listOfDealsInformationToLender)
+            setTimeout(function(){
+                    setLoading(false);
+                   },2000)
         })
         .catch(function(error){
             console.log(error)
@@ -126,12 +159,25 @@ function add1(){
        myclosedDealfunction();
     },[]);
 
+    function footer() {
+     return (
+      <View style={{alignSelf:'center'}}><Text>No More Data Present Please GO Back </Text></View>
+     );
+    }
+
   return (
 
     <SafeAreaView style={{paddingTop:10,flex:1,marginBottom:0}}>
+    <View style={{flexDirection:'row',justifyContent:'space-between',margin:3}}>
+    <View style={styles.btn}><TouchableOpacity onPress={sub}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
 
+<<<<<<< Updated upstream
         <View style={{flexDirection:'row',justifyContent:'space-between',margin:8}}>
             <View style={styles.btn}><TouchableOpacity onPress={sub1}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
+=======
+    <View style={styles.btn2}><TouchableOpacity onPress={add}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
+    </View>
+>>>>>>> Stashed changes
 
             <View style={styles.btn2}><TouchableOpacity onPress={add1}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
         </View>
@@ -142,9 +188,18 @@ function add1(){
            renderItem={renderList}
 
            keyExtractor={item => item.dealId}
+           ListFooterComponent={footer}
+           ListFooterComponentStyle={styles.footerStyle}
       />
     {/* </View> */}
-
+    <AnimatedLoader
+     visible={loading}
+     overlayColor="rgba(255,255,255,0.75)"
+     source={require("../assets/loading.json")}
+     animationStyle={styles.lottie}
+     speed={1.5}>
+ <Text style={{fontSize:18,fontWeight:'bold'}}>Loading.....</Text>
+ </AnimatedLoader>
     </SafeAreaView>
   )
 }
@@ -179,6 +234,7 @@ const styles = StyleSheet.create({
 
   },
   btn:{
+<<<<<<< Updated upstream
     marginLeft:30,
     borderWidth:1,
     width:60,
@@ -196,6 +252,32 @@ const styles = StyleSheet.create({
     borderRadius:8,
     backgroundColor:'#999999'
    },
+=======
+   marginLeft:30,
+   borderWidth:1,
+   width:60,
+   height:20,
+   alignItems:'center',
+   borderRadius:8,
+   backgroundColor:'#84c0e2'
+  },
+  btn2:{
+   marginRight:30,
+   borderWidth:1,
+   width:60,
+   height:20,
+   alignItems:'center',
+   borderRadius:8,
+   backgroundColor:'#999999'
+  },
+footerStyle:{
+ marginTop:50
+},
+lottie: {
+  width: 150,
+  height: 150
+},
+>>>>>>> Stashed changes
 
 
 })

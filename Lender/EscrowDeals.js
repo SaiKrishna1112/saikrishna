@@ -2,22 +2,44 @@ import React, { useState,useEffect } from 'react'
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
-
-import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity} from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons'
+import { StyleSheet, Text, View,Button ,TextInput,FlatList,Modal,SafeAreaView,TouchableOpacity,ToastAndroid} from 'react-native';
+import AnimatedLoader from "react-native-animated-loader";
 
 import ParticpatedDeals from './ParticpatedDeals';
 import ViewStatement from './ViewStatement';
 import SingleDeal from './SingleDeal';
 
 const EscrowDeals = ({navigation}) => {
+ const errormsg = msg => {
+   ToastAndroid.showWithGravity(msg,
+     ToastAndroid.SHORT,
+     ToastAndroid.CENTER
+   );
+ };
+    const [count,setCount] = useState(1);
     const [deal,setDeal]=useState([])
+    const [loading,setLoading] = useState(false);
     const userDetails = useSelector(state=>state.counter);
    const userDetail = useSelector(state=>state.logged);
     var access = userDetails.headers.accesstoken;
     var id = userDetails.data.id;
-    var Data={ pageNo:1,pageSize:10,dealType:'HAPPENING',dealName: "ESCROW"}
+    function add(){
+       setCount(count+1);
+     ongoingDealfunction()
+    }
+          function sub(){
+           if(count==0){
+             errormsg("No Data Found")
+             setCount(count+2)
+          }else{
+          setCount(count-1);
+           ongoingDealfunction()
+          }
+          }
+    var Data={ pageNo:count,pageSize:10,dealType:'HAPPENING',dealName: "ESCROW"}
 const ongoingDealfunction=param=>{
+   setLoading(true)
     axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/listOfDealsInformationForEquityDeals',
     Data,
       {headers:{
@@ -28,6 +50,9 @@ const ongoingDealfunction=param=>{
         .then(function(response){
         //console.log(response.data.listOfBorrowersDealsResponseDto);
             setDeal(response.data.listOfBorrowersDealsResponseDto)
+            setTimeout(function(){
+                    setLoading(false);
+                   },2000)
         })
         .catch(function(error){
             console.log(error)
@@ -108,6 +133,7 @@ const ongoingDealfunction=param=>{
     useEffect(()=>{
        ongoingDealfunction();
     },[]);
+<<<<<<< Updated upstream
 
     const Footer_Component = () => {
       return (
@@ -122,6 +148,13 @@ const ongoingDealfunction=param=>{
       );
     }
 
+=======
+    function footer() {
+     return (
+      <View style={{alignSelf:'center'}}><Text>No More Data Present Please GO Back </Text></View>
+     );
+    }
+>>>>>>> Stashed changes
   return (
 
     <SafeAreaView style={{paddingTop:6,flex:1,marginBottom:0}}>
@@ -129,15 +162,33 @@ const ongoingDealfunction=param=>{
        <TouchableOpacity style={{backgroundColor:'#3090C7',borderRadius:3,height:28,width:110,alignItems:'center',justifyContent:'center',}}
           onPress={()=>navigation.navigate('Escrow Closed Deals')}><Text style={{color:'white',fontWeight:"bold"}}>Closed Deals</Text></TouchableOpacity>
     </View>
+    <View style={{flexDirection:'row',justifyContent:'space-between',margin:3}}>
+    <View style={styles.btn}><TouchableOpacity onPress={sub}><Text style={{color:'white'}}><Icon name="arrow-back" size={15}/>Prev</Text></TouchableOpacity></View>
+
+    <View style={styles.btn2}><TouchableOpacity onPress={add}><Text>Next<Icon name="arrow-forward" size={15}/></Text></TouchableOpacity></View>
+    </View>
     <View style={{marginTop:4}}>
       <FlatList
            data={deal}
            renderItem={renderList}
            keyExtractor={item => item.dealId}
+<<<<<<< Updated upstream
            ListFooterComponent={Footer_Component}
 
+=======
+           ListFooterComponent={footer}
+           ListFooterComponentStyle={styles.footerStyle}
+>>>>>>> Stashed changes
       />
     </View>
+    <AnimatedLoader
+     visible={loading}
+     overlayColor="rgba(255,255,255,0.75)"
+     source={require("../assets/loading.json")}
+     animationStyle={styles.lottie}
+     speed={1.5}>
+ <Text style={{fontSize:18,fontWeight:'bold'}}>Loading.....</Text>
+ </AnimatedLoader>
 
     </SafeAreaView>
   )
@@ -171,7 +222,32 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     opacity:0.1,
 
-  }
+  },
+  btn:{
+   marginLeft:30,
+   borderWidth:1,
+   width:60,
+   height:20,
+   alignItems:'center',
+   borderRadius:8,
+   backgroundColor:'#84c0e2'
+  },
+  btn2:{
+   marginRight:30,
+   borderWidth:1,
+   width:60,
+   height:20,
+   alignItems:'center',
+   borderRadius:8,
+   backgroundColor:'#999999'
+  },
+footerStyle:{
+ marginTop:50
+},
+lottie: {
+  width: 150,
+  height: 150
+},
 
 
 })

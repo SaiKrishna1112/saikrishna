@@ -59,7 +59,11 @@ useEffect(()=>{
 const renderList = ({ item }) => {
 return (
     <ScrollView>
+<<<<<<< Updated upstream
          
+=======
+
+>>>>>>> Stashed changes
          <View style={{backgroundColor:'white',marginHorizontal:11,height:"auto",padding:8,borderColor:'grey',borderWidth:2,borderTopColor:"#F75D59",borderBottomWidth:0,borderTopWidth:3.5}}>
 
                 <View style={styles.flatmain}>
@@ -94,10 +98,18 @@ return (
             justifyContent: 'center',
             alignItems: 'center'
           }}>
+<<<<<<< Updated upstream
     
           </View>
         );
       }
+=======
+
+          </View>
+        );
+      }
+
+>>>>>>> Stashed changes
 
 
     return (
@@ -169,7 +181,11 @@ const styles=StyleSheet.create({
         borderRadius:8,
         backgroundColor:'#999999'
        },
+<<<<<<< Updated upstream
        
+=======
+
+>>>>>>> Stashed changes
 
 
 })

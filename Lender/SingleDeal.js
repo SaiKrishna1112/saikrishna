@@ -174,11 +174,7 @@ return(
     </View>
 
     <ScrollView>
-    <View style={{backgroundColor:'white',marginHorizontal:9,marginTop:15}}>
-    <View style={{marginHorizontal:20,marginTop:17}}>
-      <Text style={{fontWeight:'bold',fontSize:18}}>Deal Info</Text>
-    </View>
-
+    <View style={{backgroundColor:'white',marginHorizontal:9,marginTop:10}}>
     <View style={{marginTop:15}}>
 
         <View style={styles.flatmain}>
@@ -357,21 +353,3 @@ const styles = StyleSheet.create({
   })
 
 export default SingleDeal;
-
-
-// <View style={{flexDirection:'row',alignItems:'center',top:-2}}>
-//   <RadioButton.Item value="QUARTELY"/>
-//   <Text style={{fontSize:18,left:-10,top:-2}}>Quaterly Interest 0%</Text>
-// </View>
-// <View style={{flexDirection:'row',alignItems:'center',top:-2}}>
-//   <RadioButton.Item value="HALFLY"/>
-//   <Text style={{fontSize:18,left:-10,top:-2}}>Half-Yearly Interest Pay-out 0%</Text>
-// </View>
-// <View style={{flexDirection:'row',alignItems:'center',top:-2}}>
-//   <RadioButton.Item value="YEARLY"/>
-//   <Text style={{fontSize:18,left:-10,top:-2}}>Yearly Interest Pay-out 0%</Text>
-// </View>
-// <View style={{flexDirection:'row',alignItems:'center',top:-2}}>
-//   <RadioButton.Item value="ENDOFTHEDEAL"/>
-//   <Text style={{fontSize:18,left:-10,top:-2}}>End of Deal Interest Pay-out 0%</Text>
-// </View>
