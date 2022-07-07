@@ -1,6 +1,6 @@
-import React,{useState,useLayoutEffect} from 'react'
+import React,{useState,useLayoutEffect,useEffect} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import {View,Text,TextInput,ScrollView,TouchableOpacity,Alert} from 'react-native'
+import {View,Text,TextInput,ScrollView,TouchableOpacity,Alert,Image,ToastAndroid} from 'react-native'
 import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Icons from 'react-native-vector-icons/FontAwesome'
@@ -9,7 +9,9 @@ import SelectDropdown from 'react-native-select-dropdown'
 import styles from '../src/styles';
 import axios from "axios"
 import {useSelector} from 'react-redux';
-import { Root,Popup } from 'popup-ui'
+import { Root,Popup,Toast} from 'popup-ui'
+import success from '../navigation/Success';
+import error from '../navigation/Error';
 
 const LenderEdit = ({navigation}) => {
 
@@ -46,6 +48,14 @@ const LenderEdit = ({navigation}) => {
  const [shouldShow,setshouldShow]=useState(false);
  const [otp,setOtp]=useState();
  const [loading,setLoading]=useState(false)
+
+ const errormsg = msg => {
+  ToastAndroid.showWithGravity(msg,
+    ToastAndroid.SHORT,
+    ToastAndroid.CENTER,
+
+  );
+};
 
 
 function Verify(number){
@@ -86,57 +96,90 @@ navigation.setOptions({
 });
 },[]);
 
+//================fetch location using get call==================
+function pincodefunction(){
+  axios.get('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+pincode+'/pincode',
+  {
+    headers:{
+      accessToken:access
+    }
+  })
+  .then(function (response) {
+    setLocality(response.data.pinresults[0].block);
+    setCity(response.data.city);
+    setState(response.data.state);
+    setTimeout(function(){
+               setLoading(false);
+               
+           
+             }, 1000);
+           })
+   .catch(function (error) {
+    //  console.log(error);
+//       Alert.alert(
+//  "Warring",
+//  "Please Check Something went Wrong",
+//  [
+//   { text: "OK", onPress: () => setLoading(false) }
+//  ]
+//  );
+console.log('error',error);
+      console.log(error.response.data.errorMessage);
+  });
+ }
+//============================================
+
 function Profilesave(){
   if (username=="") {
-   alert("Please Enter Name");
+    errormsg("Please Enter Name");
    return false;
   }
  if (useremail=="") {
-  alert("Please Enter Email ");
+  errormsg("Please Enter Email ");
   return false;
  }
 if (usermobilenumber=="") {
-  alert("Please Enter Mobile Number");
+  errormsg("Please Enter Mobile Number");
   return false;
  }
 if (panNumber=="") {
- alert("Please Enter PAN Number");
+  errormsg("Please Enter PAN Number");
  return false;
  var panRegex = /[A-Z]{5}\d{4}[A-Z]{1}/;
  if(!panRegex.test(panNumber)){
-  alert("Please Enter valid PAN Number")
+  errormsg("Please Enter valid PAN Number")
  }
 }
 if (fatherName=="") {
- alert("Please Enter Father Name");
+  errormsg("Please Enter Father Name");
  return false;
 }
 if (residenceAddress=="") {
- alert("Please Enter Residence Address");
+  errormsg("Please Enter Residence Address");
  return false;
 }
 if (permanentAddress=="") {
- alert("Please Enter Permanent Address");
+  errormsg("Please Enter Permanent Address");
  return false;
 }
 if (pincode=="") {
- alert("Please Enter Pincode");
+  errormsg("Please Enter Pincode");
  return false;
  if(pincode.length>6){
-  alert("Please Enter valid Pincode");
+  errormsg("Please Enter valid Pincode");
   return false;
  }
 }
 if (locality=="") {
- alert("Please Enter Locality");
+  errormsg("Please Enter Locality");
  return false;
 }
 if (state=="") {
- alert("Please Enter State");
+  errormsg("Please Enter State");
  return false;
 }
 if (city=="") {
- alert("Please Enter City");
+  errormsg("Please Enter City");
  return false;
 }
 setLoading(true);
@@ -165,40 +208,25 @@ axios.patch('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxylo
          }
              })
   .then(function (response) {
-   //console.log(response.data);
-
+  //  console.log(response.data);
    setTimeout(function(){
               setLoading(false);
-              msgs()
-              alert("Successfully Update Profile Details");
+              success();
             }, 1000);
           })
   .catch(function (error) {
-    console.log(error);
-     //console.log(error.response.data.errorMessage);
-//      Alert.alert(
-// "Warring",
-// "Please Try again",
-// [
-//  { text: "OK", onPress: () => setLoading(false) }
-// ]
-// );
+    // console.log(error);
+    error();
 
  });
 }
 
-function msgs(){
- return (
-  Popup.show({
-                type: 'Success',
-                title: 'Upload complete',
-                button: false,
-                textBody: 'Congrats! Your upload successfully done',
-                buttonText: 'Ok',
-                callback: () => Popup.hide()
-              })
-        )
-}
+useEffect(()=>{
+    pincodefunction();
+},[pincode])
+
+
+
 
  return (
   <Root>
@@ -248,7 +276,7 @@ function msgs(){
 
             <View style={styles.inputbox}>
             <Icon  size={20} style={{alignItems:'flex-start'}} name="call"/>
-              <TextInput style={{marginLeft:10}} placeholder="Mobile Number" keyboardType="numeric" value={usermobilenumber}
+              <TextInput style={{marginLeft:10}} placeholder="Mobile Number" keyboardType="numeric" value={usermobilenumber} maxLength={10}
               onChangeText={(number)=>setUsermobilenumber(number)}/>
               </View>
 
@@ -341,7 +369,7 @@ function msgs(){
 
               <View style={styles.inputbox}>
               <Icon  size={20} style={{alignItems:'flex-start'}} name="location"/>
-              <TextInput style={{marginLeft:10}} placeholder="Pin Code" keyboardType="numeric" value={pincode}
+              <TextInput style={{marginLeft:10}} placeholder="PinCode" keyboardType="numeric" value={pincode} maxLength={6}
               onChangeText={(number)=>setPincode(number)}/>
               </View>
 

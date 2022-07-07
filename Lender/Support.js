@@ -1,5 +1,5 @@
 import React,{useState}from "react";
-import {View,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert,ScrollView} from "react-native";
+import {View,Text,StyleSheet,Image,TextInput,TouchableOpacity,Alert,ScrollView,ToastAndroid} from "react-native";
 
 import {useSelector} from "react-redux";
 import axios from "axios";
@@ -8,7 +8,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import {FormData,File} from "formdata-node";
-import style from '../src/styles'
+import style from '../src/styles';
+import success from "../navigation/Success";
+import error from "../navigation/Error";
+import { Root } from "popup-ui";
+import uploadsuccess from "../navigation/uploadsuccess";
+
+
+
 
 const Support=({navigation})=>{
     const count =useSelector(state=>state.counter);
@@ -22,9 +29,13 @@ const Support=({navigation})=>{
      const [ doc, setDoc ] = useState();
      const [ photoId, setphotoid] = useState();
       const fd = new FormData();
-      const setToastMsg= msg =>{
-        ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
-       };
+  const errormsg = msg => {
+        ToastAndroid.showWithGravity(msg,
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        
+        );
+      };
         axios({
             method:'get',
             url:'http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/'+id+'/gettingMobileAndEmail',
@@ -38,25 +49,27 @@ const Support=({navigation})=>{
              setnumber(response.data.mobileNumber);
                   })
             .catch(function (error) {
-             console.log('error',error);
+           console.log('error',error);
+          
            });
+
     const submitfunction=props=>{
         if(name==""){
-            Alert.alert("Please enter Your Name");
+            errormsg("Please enter Your Name");
             return false;
         }
         if(email==""){
-            Alert.alert("Please enter your email_id");
+          errormsg("Please enter your email_id");
             return false;
 
         }
         if(number==""){
-            Alert.alert("Please enter your Mobile Number");
+          errormsg("Please enter your Mobile Number");
             return false;
 
         }
         if(query==""){
-            Alert.alert("Please enter your Query");
+          errormsg("Please enter your Query");
             return false;
 
         }
@@ -73,23 +86,32 @@ const Support=({navigation})=>{
     }}
     )
     .then(function (response) {
-    console.log(response.data);
+    // console.log(response.data);
             setTimeout(function(){
-                Alert.alert("Thanks.We have received your email and will get back to you with a response soon.")
-
-
+              popupmsg();
           }, 3000);
           })
           .catch(function (error) {
-            console.log(error);
-
+              error();
     }
     );
-
        }
 
+function popupmsg(){
+        return (
+         Popup.show({
+           type: 'Success',
+           title: 'Success',
+           button: true,
+           textBody: 'Thanks.We have received your Query and will get back to you with a response soon',
+           buttontext: 'Ok',
+           callback: () => Popup.hide(),
+       
+         })
+    );
+    }
 
-            const pickDocument = async () => {
+const pickDocument = async () => {
                 let result = await DocumentPicker.getDocumentAsync({
                  type: "*/*",
                  copyToCacheDirectory: true })
@@ -127,22 +149,23 @@ const Support=({navigation})=>{
                                }
                          })
                           .then(function (response) {
-                           console.log(response);
-                           alert("Successfully Upload")
+                          //  console.log(response);
+                            uploadsuccess();
                            setphotoid(response.data.documentId);
                           })
                     .catch(function (error) {
-                     console.log('error',error);
-                     console.log("Upload Sai Krishna");
-                   });
-                      console.log(fd._parts)
-                      console.log(fileToUpload.uri);
+                    //  console.log('error',error);
+                        error();
+                      });
+                      // console.log(fd._parts)
+                      // console.log(fileToUpload.uri);
                       setDoc(fileToUpload.name)
                     }
                   });
             }
 
-    return(
+  return(
+    <Root>
         <View style={styles.container}>
         <ScrollView>
         <TouchableOpacity style={styles.btn1} onPress={()=>{navigation.navigate('Ticket History')}} >
@@ -175,7 +198,8 @@ const Support=({navigation})=>{
         </View>
 
         </ScrollView>
-           </View>
+        </View>
+    </Root>
     )
 }
 

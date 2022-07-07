@@ -30,6 +30,7 @@ import Tickethistory from '../Lender/Tickethistory'
 import ParticipateDetails from '../Lender/ParticipateDetails' 
 
 
+
 const Screen=()=> {
  const Stack = createStackNavigator();
 

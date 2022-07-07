@@ -14,8 +14,8 @@ const Login=({navigation})=>{
      ToastAndroid.CENTER
    );
  };
-  const[username,setusername]=useState();
-  const [password, setPassword] = useState();
+  const[username,setusername]=useState('sreeja83411@gmail.com');
+  const [password, setPassword] = useState('Test@123');
   const [loading,setLoading] = useState(false);
   var prod='https://fintech.oxyloans.com/oxyloans/v1/user';
   var local='http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user';

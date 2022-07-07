@@ -1,11 +1,16 @@
 import React,{useState,useLayoutEffect,useEffect} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import {View,Text,TextInput,ScrollView,TouchableOpacity} from 'react-native'
+import {View,Text,TextInput,ScrollView,TouchableOpacity,ToastAndroid} from 'react-native'
 import DatePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Icons from 'react-native-vector-icons/FontAwesome'
 import styles from '../src/styles'
 import {useSelector} from 'react-redux';
+import success from '../navigation/Success';
+import error from '../navigation/Error';
+import axios from "axios";
+import { Root,Popup,Toast} from 'popup-ui'
+
 
 const LenderBankDetails = ({navigation}) => {
 
@@ -24,6 +29,16 @@ const LenderBankDetails = ({navigation}) => {
  const [bankcity,setBankCity]=useState(userDetail.bankAddress);
  const [hide,setHide]=useState(true);
  const [shouldShow,setshouldShow]=useState(true);
+ const[loading,setLoading]=useState(false);
+
+ const errormsg = msg => {
+  ToastAndroid.showWithGravity(msg,
+    ToastAndroid.SHORT,
+    ToastAndroid.CENTER,
+  
+  );
+};
+
 
  useLayoutEffect(()=>{
  navigation.setOptions({
@@ -35,19 +50,19 @@ const LenderBankDetails = ({navigation}) => {
  function Verify() {
 
   if(accountNo==""){
-   alert("Please Enter Account Number");
+    errormsg("Please Enter Account Number");
    return false;
   }
   if(confirmAccountNo==""){
-   alert("Please Enter confirm Account Number");
+    errormsg("Please Enter confirm Account Number");
    return false;
   }
   if(iFSCCode==""){
-   alert("Please Enter IFSC Number");
+    errormsg("Please Enter IFSC Number");
    return false;
   }
   setLoading(true);
-  var data={bankAccount:"026291800001191",ifscCode:"YESb0000262"};
+  var data={bankAccount:"026291800001191",ifscCode:"YESB0000262"};
   if(accountNo==confirmAccountNo){
   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/verifyBankAccountAndIfsc',
      data,{headers:{
@@ -55,7 +70,7 @@ const LenderBankDetails = ({navigation}) => {
            }
           })
     .then(function (response) {
-     console.log(response.data.data);
+    //  console.log(response.data.data);
      setName(response.data.data.nameAtBank)
      setBankName(response.data.data.bankName)
      setBranch(response.data.data.branch)
@@ -67,19 +82,13 @@ const LenderBankDetails = ({navigation}) => {
               }, 1000);
             })
     .catch(function (error) {
-      console.log(error);
-       console.log(error.response.data.errorMessage);
-       Alert.alert(
- "Warring",
- error.response.data.errorMessage,
- [
-   { text: "OK", onPress: () => setLoading(false) }
- ]
-);
+      // console.log(error);
+      //  console.log(error.response.data.errorMessage);
+      error();
    });
   }
   else{
-   alert("Please check confirm Account Number");
+    errormsg("Please check confirm Account Number");
   }
 }
 function BankVerification(){
@@ -98,17 +107,17 @@ useEffect(()=>{
 
  function Banksave(){
   if(name==""){
-   alert("Please Enter Account Holder Name");
+    errormsg("Please Enter Account Holder Name");
    return false;
   }
   if(bankName==""){
-   alert("Please Enter Bank Name");
+    errormsg("Please Enter Bank Name");
    return false;
   }if(branch==""){
-   alert("Please Enter Branch Name");
+    errormsg("Please Enter Branch Name");
    return false;
   }if(bankcity==""){
-   alert("Please Enter City");
+    errormsg("Please Enter City");
    return false;
   }
   setLoading(true);
@@ -119,30 +128,22 @@ useEffect(()=>{
            }
           })
     .then(function (response) {
-     console.log(response.data);
-     Alert.alert(
-      "Success",
-       "Successfully update your Bank Details "
-     )
-     setTimeout(function(){
+      //  console.log(response.data);
+        setTimeout(function(){
                   setLoading(false);
-                   navigation.navigate('Profile')
-              }, 1000);
-            })
-    .catch(function (error) {
-      console.log(error);
-       console.log(error.response.data.errorMessage);
-       Alert.alert(
- "Warring",
- error.response.data.errorMessage,
- [
-   { text: "OK", onPress: () => setLoading(false) }
- ]
-);
-   });
- }
+                  success();
+                }, 1000);
+              })
+      .catch(function (error) {
+        // console.log(error);
+        error();
+    
+      });
+    }
 
+ 
  return(
+  <Root>
   <View style={{marginTop:10,alignSelf:'center',flex:1,height:800}}>
      <View style={styles.inputbox}>
          <Icon  size={20} style={{alignItems:'flex-start'}} name="mail"/>
@@ -172,7 +173,7 @@ useEffect(()=>{
         <View>
            <View style={styles.inputbox}>
                <Icon  size={20} style={{alignItems:'flex-start'}} name="mail"/>
-               <TextInput style={{marginLeft:10}} style={{marginLeft:10}} placeholder="Enter Name As Per Bank " value={name}
+               <TextInput style={{marginLeft:10}} placeholder="Enter Name As Per Bank " value={name}
                onChangeText={(text)=>setName(text)}/>
            </View>
            <View style={styles.inputbox}>
@@ -192,11 +193,12 @@ useEffect(()=>{
            </View>
            <TouchableOpacity style={styles.btn} onPress={Banksave}>
              <Icon  size={20} style={{alignItems:'flex-start'}} name="save"/>
-              <Text >Save</Text>
+              <Text>Save</Text>
             </TouchableOpacity >
        </View>
            ):null}
    </View>
+   </Root>
  )
 }
 

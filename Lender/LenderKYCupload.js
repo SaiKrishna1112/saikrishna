@@ -10,7 +10,10 @@ import {FormData} from "formdata-node";
 import axios from "axios"
 import {useSelector} from 'react-redux';
 import styles from '../src/styles'
-
+import success from '../navigation/Success';
+import error from '../navigation/Error';
+import { Root } from 'popup-ui';
+import uploadsuccess from '../navigation/uploadsuccess';
 
 const LenderKYCupload = ({navigation}) => {
 
@@ -69,11 +72,13 @@ const panDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
+       uploadsuccess();
             })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+      //  console.log(error.response.data.errorMessage);    
+      //  console.log('error',error);
+   
+       error();
      });
      setPanPic(fileToUpload.name);
    }
@@ -121,11 +126,10 @@ const chequeDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
+       uploadsuccess();
             })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+       error();
      });
      setChequePic(fileToUpload.name);
    }
@@ -173,11 +177,12 @@ const aadharDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
-            })
+       uploadsuccess();
+      })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+      //  console.log('error',error);
+      //  console.log(error.response.data.errorMessage);
+       error();
      });
      setAadharPic(fileToUpload.name);
    }
@@ -224,11 +229,10 @@ const voterDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
+       uploadsuccess();
             })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+       error();
      });
      setvoterPic(fileToUpload.name);
    }
@@ -275,11 +279,10 @@ const drivingDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
+       uploadsuccess();
             })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+       error();
      });
      setDrivingPic(fileToUpload.name);
    }
@@ -326,11 +329,10 @@ const passportDocument = async () => {
      })
       .then(function (response) {
        //console.log(response);
-       alert("Successfully Upload")
-            })
+       uploadsuccess();
+                 })
       .catch(function (error) {
-       console.log('error',error);
-       console.log(error.response.data.errorMessage);
+       error();
      });
      setPassportPic(fileToUpload.name);
    }
@@ -352,8 +354,7 @@ const getpan=()=>{
       setPanPic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+     error();
     });
 
 }
@@ -370,8 +371,7 @@ const getcheque=()=>{
        setChequePic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+      error();
     });
 
 }
@@ -388,8 +388,7 @@ const getaadhar=()=>{
        setAadharPic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+      error();
     });
 
 }
@@ -407,8 +406,7 @@ const getvoter=()=>{
       setvoterPic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+     error();
     });
 
 }
@@ -426,8 +424,7 @@ const getdriving=()=>{
       setDrivingPic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+      error();
     });
 
 }
@@ -445,8 +442,7 @@ const getpass=()=>{
       setPassportPic(response.data.fileName);
            })
      .catch(function (error) {
-      console.log('error',error);
-      console.log(error.response.data.errorMessage);
+      error();
     });
 
 }
@@ -461,71 +457,75 @@ useEffect(()=>{
 },[])
 
  return(
-  <View style={{marginTop:20,alignSelf:'center',flex:1,height:800}}>
-   <TouchableOpacity onPress={panDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{panPic}</Text>
-              <View style={styles.btn}>
-                 <Text>Upload</Text>
-              </View>
-     </View>
-   </TouchableOpacity>
+  <Root>
+      <View style={{marginTop:20,alignSelf:'center',flex:1,height:800}}>
+      <TouchableOpacity onPress={panDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{panPic}</Text>
+                  <View style={styles.btn}>
+                    <Text>Upload</Text>
+                  </View>
+        </View>
+      </TouchableOpacity>
 
+      <TouchableOpacity onPress={chequeDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{chequePic}</Text>
+                <View style={styles.btn}>
+                  <Text>Upload</Text>
+                </View>
+        </View>
+      </TouchableOpacity>
 
-   <TouchableOpacity onPress={chequeDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{chequePic}</Text>
-            <View style={styles.btn}>
-              <Text>Upload</Text>
+        <View style={{marginTop:10,marginBottom:10}}>
+          <Text style={{fontWeight:'bold',marginLeft:80}}>Upload Anyone in the following</Text>
+          <Text style={{fontWeight:'bold',marginLeft:52}}>Aadhar,voterID,Passport,Driving Licence</Text>
+        </View>
+
+      <TouchableOpacity onPress={aadharDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{aadharPic}</Text>
+                <View style={styles.btn}>
+                  <Text>Upload</Text>
+                </View>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={voterDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{voterPic}</Text>
+                  <View style={styles.btn}>
+                        <Text>Upload</Text>
+                  </View>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={drivingDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{driving}</Text>
+                <View style={styles.btn}>
+                  <Text>Upload</Text>
             </View>
-     </View>
-   </TouchableOpacity>
-    <View style={{marginTop:10,marginBottom:10}}>
-       <Text style={{fontWeight:'bold',marginLeft:80}}>Upload Anyone in the following</Text>
-       <Text style={{fontWeight:'bold',marginLeft:52}}>Aadhar,voterID,Passport,Driving Licence</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={passportDocument}>
+        <View style={styles.inputbox}>
+            <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
+            <Text style={styles.txt4}>{passportPic}</Text>
+                  <View style={styles.btn}>
+                    <Text>Upload</Text>
+              </View>
+        </View>
+      </TouchableOpacity>
+      
     </View>
-   <TouchableOpacity onPress={aadharDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{aadharPic}</Text>
-             <View style={styles.btn}>
-               <Text>Upload</Text>
-             </View>
-     </View>
-   </TouchableOpacity>
-
-   <TouchableOpacity onPress={voterDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{voterPic}</Text>
-               <View style={styles.btn}>
-                     <Text>Upload</Text>
-               </View>
-     </View>
-   </TouchableOpacity>
-
-   <TouchableOpacity onPress={drivingDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{driving}</Text>
-            <View style={styles.btn}>
-               <Text>Upload</Text>
-         </View>
-     </View>
-   </TouchableOpacity>
-
-   <TouchableOpacity onPress={passportDocument}>
-     <View style={styles.inputbox}>
-         <Icon  size={20} style={{alignItems:'flex-start'}} name="cloud-upload"/>
-         <Text style={styles.txt4}>{passportPic}</Text>
-              <View style={styles.btn}>
-                <Text>Upload</Text>
-           </View>
-     </View>
-   </TouchableOpacity>
- </View>
+ </Root>
  )
 }
 

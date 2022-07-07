@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import React,{useState,useEffect,useLayoutEffect} from 'react'
 import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList,Button,Alert,ToastAndroid} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+=======
+import React,{useState,useEffect} from 'react'
+import { View,Text,TextInput,StyleSheet,Image,TouchableOpacity,ScrollView,FlatList} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+>>>>>>> Stashed changes
 import { SliderBox } from "react-native-image-slider-box";
 import { Neomorph } from 'react-native-neomorph-shadows';
 import PaginationDot from 'react-native-animated-pagination-dot'
@@ -8,6 +14,7 @@ import  '@react-native-community/art'
 import {useSelector} from 'react-redux';
 import axios from 'axios'
 import * as FileSystem from 'expo-file-system';
+
 
 const Home = ({navigation}) => {
 
@@ -135,7 +142,6 @@ const [imageshow,setimageshow] = useState();
        useEffect(()=>{
         Getfunction();
         greeting();
-        walletfunction();
         earningsfunction();
         referralearningsfunction();
         interestearningsfunction();
@@ -144,40 +150,40 @@ const [imageshow,setimageshow] = useState();
 
 //---------------------------------------------------------------------
 //Download Investment/Wallets
-  function downloadwallet(){
-    axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/excelsForNewLenderDashboard',
-    {
-      userId:id,
-      requestType:"WALLETCREDITED"
-    },{
-      headers:{
-        accessToken:access
-      }
-    })
-    .then(function (response) {
-      setLoading(true);
-    //console.log(response.data.excelDownloadUrl);
-          FileSystem.downloadAsync(
-          response.data.excelDownloadUrl,
-            ExternalStorageDirectoryPath
-          )
-            .then(({ uri }) => {
-              console.log('Finished downloading to ', uri);
-            })
-            .catch(error => {
-              console.error(error);
-            });
-      setTimeout(function(){
+  // function downloadwallet(){
+  //   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/excelsForNewLenderDashboard',
+  //   {
+  //     userId:id,
+  //     requestType:"WALLETCREDITED"
+  //   },{
+  //     headers:{
+  //       accessToken:access
+  //     }
+  //   })
+  //   .then(function (response) {
+  //     setLoading(true);
+  //   //console.log(response.data.excelDownloadUrl);
+  //         FileSystem.downloadAsync(
+  //         response.data.excelDownloadUrl,
+  //           ExternalStorageDirectoryPath
+  //         )
+  //           .then(({ uri }) => {
+  //             console.log('Finished downloading to ', uri);
+  //           })
+  //           .catch(error => {
+  //             console.error(error);
+  //           });
+  //     setTimeout(function(){
 
-       setLoading(false)
-              })
-             })
-    .catch(function (error) {
-     console.log('error',error);
+  //      setLoading(false)
+  //             })
+  //            })
+  //   .catch(function (error) {
+  //    console.log('error',error);
 
-     });
+  //    });
 
-    }
+  //   }
 
 function walletfunction(){
   axios.post('http://ec2-13-235-82-38.ap-south-1.compute.amazonaws.com:8080/oxyloans/v1/user/newLenderDashboard',{
@@ -390,14 +396,11 @@ function walletfunction(){
           }
 
 
-
-
-
-
   const renderList = ({ item }) => {
 
 
     return (
+
 
         <View style={{borderColor:'grey',borderWidth:1.8,marginHorizontal:15,height:"auto",padding:8,borderTopWidth:8,borderTopColor:'#2B547E',borderBottomWidth:0.5}}>
 
@@ -415,6 +418,7 @@ function walletfunction(){
         </View>
 
         </View>
+       
         )}
   const renderList1 = ({ item }) => {
 
@@ -546,10 +550,19 @@ function walletfunction(){
 
 
  return(
+<<<<<<< Updated upstream
   <ScrollView>
   <View style={{marginTop:5}}>
     <View>
      <ScrollView horizontal>
+=======
+
+ 
+    <ScrollView>
+  <View style={{marginTop:5}}>
+ 
+    <ScrollView horizontal>
+>>>>>>> Stashed changes
    <View style={styles.box1}>
      <Text style={styles.txt1}>{Amount}</Text>
      <View style={{backgroundColor:'#008B8B',width:165,marginHorizontal:20,paddingVertical:10,bottom:-8,alignItems:'center'}}>
@@ -564,6 +577,11 @@ function walletfunction(){
      </View>
    </View>
 
+<<<<<<< Updated upstream
+=======
+
+  
+>>>>>>> Stashed changes
    <View style={styles.box3}>
      <Text style={styles.txt1}>{ClosedAmt}</Text>
      <Text style={{color:'white'}}></Text>
@@ -579,12 +597,40 @@ function walletfunction(){
      </View>
    </View>
    </ScrollView>
+<<<<<<< Updated upstream
 </View>
                 <View style={{alignSelf:'center',marginBottom:15}} >
                  <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
                </View>
+=======
+
+   <View style={{alignSelf:'center',marginBottom:15}} >
+    <Text style={{fontWeight:'bold'}}>MemberShip Validity Date:  {Dates}</Text>
+  </View>
+
+       
 
 
+  <View style={styles.container2}>
+        <View style={{margin:15}}>
+          <Text style={{fontWeight:"500",fontSize:17,color:'#2B547E'}}>Investment\Wallets</Text>
+        </View>
+          <FlatList
+          data={wallet}
+          renderItem={renderList}
+          keyExtractor={item=>item.sno}
+          />
+           <PaginationDot
+            activeDotColor={'black'}
+            curPage={curPage}
+            maxPage={2}
+        />
+      </View>
+>>>>>>> Stashed changes
+
+     
+
+<<<<<<< Updated upstream
                      <View style={styles.container2}>
                 <View style={{margin:15}}>
                   <Text style={{fontWeight:"500",fontSize:17,color:'#2B547E'}}>Investment\Wallets</Text>
@@ -669,6 +715,55 @@ function walletfunction(){
 
    </View>
    </ScrollView>
+=======
+        <View style={styles.container2}>
+      <View style={{margin:15}}>
+          <Text style={{fontWeight:"500",fontSize:17,color:'#872657'}}>Referral Earnings</Text>
+        </View>
+          <FlatList
+          data={referral}
+          renderItem={renderList2}
+          keyExtractor={item=>item.sno}
+          />
+        </View>
+
+        <View style={styles.container5}>
+      <View style={{margin:15}}>
+          <Text style={{fontWeight:"500",fontSize:17,color:'#FFA500'}}>Interest Earnings</Text>
+        </View>
+          <FlatList
+          data={interestearnings}
+          renderItem={renderList3}
+          keyExtractor={item=>item.sno}
+          />
+        </View>
+
+
+        <View style={styles.container6}>
+      <View style={{margin:15}}>
+          <Text style={{fontWeight:"500",fontSize:17,color:'#F75D59'}}>Principal Returned</Text>
+        </View>
+          <FlatList
+          data={principal}
+          renderItem={renderList4}
+          keyExtractor={item=>item.sno}
+          />
+        </View>
+
+        <View style={styles.container3}>
+      <View style={{margin:15}}>
+          <Text style={{fontWeight:"500",fontSize:17,color:'green'}}>Deals vs Earnings</Text>
+        </View>
+          <FlatList
+          data={earnings}
+          renderItem={renderList1}
+          keyExtractor={item=>item.sno}
+          />
+        </View>
+        </View>
+              </ScrollView>
+
+>>>>>>> Stashed changes
  )
 }
 
@@ -678,11 +773,18 @@ const styles=StyleSheet.create({
  image:{
   height:80,width:80,marginLeft:10,marginTop:10
  },
- view:{
-  flexDirection:'row',height:100,width:320,borderWidth:0.5,marginLeft:40,marginTop:10,borderRadius:20
- },
+//  view:{
+//   flexDirection:'row',height:100,width:320,borderWidth:0.5,marginLeft:40,marginTop:10,borderRadius:20
+//  },
+
  text1:{
   justifyContent:'flex-start',alignItems:'center',width:200,marginLeft:20
+ },
+ text:{
+  marginLeft:10,fontSize:20,fontWeight:'bold'
+ },
+ txt:{
+  marginLeft:8,marginBottom:10,marginTop:10
  },
  images:{
   borderRadius:20,
@@ -746,7 +848,7 @@ const styles=StyleSheet.create({
     paddingTop:10,
     width:350,
     marginBottom:15,
-    alignSelf:'center'
+    alignContent:'center'
   },
   Txt1:{
     fontWeight:'bold',

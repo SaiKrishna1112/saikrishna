@@ -122,6 +122,7 @@ const [loading,setLoading]=useState(false)
       },[]);
 
 return(
+  <ScrollView>
        <View style={{alignItems:'center'}}>
          <View style={{height:200,width:400,borderWidth:0.5,position:'absolute',backgroundColor:'black'}}>
            <Image source={require('../assets/background.jpg')} style={{height:250,width:400}}/>
@@ -218,6 +219,7 @@ return(
               <Text>Powered by Oxyloans</Text>
             </View>
         </View>
+        </ScrollView>
 	)
 }
 
